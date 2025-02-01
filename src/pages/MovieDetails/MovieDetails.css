@@ -1,0 +1,364 @@
+/* Базовий reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* Загальні стилі */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.header {
+  align-items: center;
+  padding-top: 80px; 
+
+}
+
+.header__back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  margin-left: 100px;
+}
+
+.header__back span {
+    font-family: "Lato", sans-serif; 
+    font-weight: 800; /* ExtraBold */
+    font-size: 16px; 
+    color: #FFFFFF; 
+}
+
+.back__arrow-container {
+    background-color: #F9F9F97A; 
+    border-radius: 7px; 
+    padding: 12px; 
+    height: 7px;
+    width: 7px;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.back__arrow-container:hover {
+    background-color: #e50914; 
+}
+
+.back__arrow-image {
+    height: 11px;
+    width: 7px;
+    position: absolute;  
+    z-index: 1;    
+}
+
+.main_context {
+    justify-content: space-between;
+    display: flex;
+
+  }
+.main__content-text {
+    order: 2; 
+    padding-right: 35px;
+    padding-top: 60px;
+
+}
+.main__content-image {
+    order: 1; 
+    padding-left: 130px;
+    padding-top: 70px;
+}
+
+.main__title {
+  font-size: 48px;
+  font-weight: 800;
+  color: #e50914;
+  margin-bottom: 5px;
+  font-family: "Lato", sans-serif;
+}
+
+.main__age-rating {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #ffffff; 
+    font-family: "Lato", sans-serif;
+    font-weight: 600; /* Semibold */
+
+}
+  .main__rating{
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #ffffff; 
+    font-style: "Lato", serif;
+    gap: 5px;
+}
+.star {
+    color: gold; 
+    font-size: 20px;
+  }
+
+  .main__genres{
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+    font-family: "Lato", sans-serif;
+    gap: 10px;
+
+}
+.main__genres strong {
+    font-weight: 700;
+}
+
+.main__duration{
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+    font-family: "Lato", sans-serif;
+    gap: 10px;
+
+  }
+  .main__duration strong {
+    font-weight: 700;
+}
+
+.main__release-date{
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+    font-family: "Lato", sans-serif;
+    gap:10px;
+  }
+  .main__release-date strong {
+    font-weight: 700;
+
+}
+  .main__actors {
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+    max-width: 650px;
+    font-family: "Lato", sans-serif;
+    gap:10px;
+
+  }
+  .main__actors strong {
+    padding-right: 10px; 
+}
+.main__description {
+    font-weight: 200;
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #FFFFFF;
+    max-width: 650px;
+    font-family: "Lato", sans-serif;
+    gap:10px;
+
+  }
+  .main__description strong {
+    font-weight: 700;
+
+}
+  .main__director {
+    font-weight: 200;
+    font-size: 20px;
+    margin-bottom: 110px;
+    color: #FFFFFF;
+    max-width: 650px;
+    font-family: "Lato", sans-serif;
+    gap:10px;
+
+  }
+  .main__director strong {
+    font-weight: 700;
+}
+
+
+.main__poster img {
+  border-radius: 26px;
+  width: 500px;
+  height: 550px;  
+  
+}
+
+.main__button-right {
+  background-color: #e50914;
+  color: black;
+  padding: 10px 20px;
+  font-weight: 800;
+  border-radius: 16px;
+}
+
+.main__button-right:hover {
+  background-color: #f9f9f97a;
+  color: #fff;
+}
+.main_schedule {
+    display: flex;
+    justify-content: center; 
+    padding-right: 80px;
+
+  }
+ .main_schedule-window{
+    border-radius: 15px;
+    z-index: 2;
+    margin-top: 30px;
+    width: 600px;
+    padding-right: 0;
+    background-color: #F9F9F97A; 
+ }
+
+
+
+ .schedule__title {
+    font-size: 30px;
+    font-weight: 800;
+    color: #e50914;
+    font-family: "Lato", sans-serif;
+    margin-left: 40px;
+  }
+  .react-datepicker{
+    float: left !important;
+margin-left: 40px;
+}
+  .react-datepicker__month-container {
+    background-color: #f00000; 
+
+}
+.react-datepicker__month{
+    background-color: #5a4e4e;
+}
+
+.react-datepicker__header {
+    background-color: #afaeae;
+    border-bottom: 11px solid #aeaeae;
+}  
+    
+.react-datepicker__week {
+  display: flex;
+
+}
+
+  .react-datepicker__day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+
+  .react-datepicker__day:hover {
+    background-color: #f12525;
+  }
+  .react-datepicker__day--today {
+    background-color: #ffe600;
+    color: black;
+    font-weight: bold;
+  }
+  .react-datepicker__day--selected{
+    background-color: #ff1800 !important;
+}
+.schedule__sessions {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px; 
+    padding: 45px 20px 10px;
+  }
+  
+  .session {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    min-width: 80px; 
+  }
+  
+  .session__time-link {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff1800;
+  }
+  .session__time-link:hover{
+    color: #ffffff;
+
+  }
+
+  @media (max-width: 768px) {
+    .main_context {
+      flex-direction: column; 
+      align-items: center; 
+      text-align: left;
+    }
+  
+    .main__content-text {
+      padding-right: 0;
+      padding-top: 20px;
+
+    }
+  
+    .main__content-image {
+      padding-left: 0;
+      padding-top: 20px;
+    }
+  
+    .main__title {
+      font-size: 36px; 
+    }
+  
+    .main__age-rating,
+    .main__rating,
+    .main__genres,
+    .main__duration,
+    .main__release-date,
+    .main__actors,
+    .main__description,
+    .main__director {
+      font-size: 16px; 
+    }
+  
+    .main__poster img {
+      width: 350px; 
+      height: auto; 
+    }
+  
+    .main__button-right {
+      margin-top: 20px; 
+    }
+  
+    .main_schedule {
+      flex-direction: column; 
+      width: 100%; 
+    padding-right: 0px ;
+    }
+  
+    .main_schedule-window {
+      width: 100%; 
+      padding: 20px; 
+    }
+  
+    .schedule__sessions {
+      justify-content: center;
+      gap: 5px; 
+    }
+  }
+  
