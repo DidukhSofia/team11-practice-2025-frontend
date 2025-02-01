@@ -1,0 +1,85 @@
+.aside {
+    width: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 50px 10px;
+    background: rgba(0, 0, 0, 0.671);
+    min-height: 100vh;
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.aside:hover {
+    width: 250px;
+}
+
+.aside__logo {
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.aside__logo img {
+    width: 60px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.aside:hover .aside__logo img {
+    transform: scale(2.5);
+}
+
+.aside__items {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+}
+
+.aside__item {
+    list-style: none;
+    text-align: left;
+    width: 100%;
+}
+
+.aside__link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+    white-space: nowrap;
+    padding: 10px;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+.aside__link-text {
+    font-family: 'Roboto';
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.aside:hover .aside__link-text {
+    opacity: 1;
+}
+
+/* Іконки залишаються видимими */
+.aside__link-icon {
+    color: white;
+    font-size: 30px;
+    transition: color 0.3s ease-in-out;
+}
+
+/* Підсвічування активної сторінки: червоний текст та іконка */
+.aside__link.active .aside__link-icon,
+.aside__link.active .aside__link-text {
+    color: red;
+}
