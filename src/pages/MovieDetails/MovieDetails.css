@@ -71,6 +71,7 @@ button {
 .main_context {
     justify-content: space-between;
     display: flex;
+    gap: 30px;
 
   }
 .main__content-text {
@@ -192,12 +193,16 @@ button {
   .main__director strong {
     font-weight: 700;
 }
+.main {
+  padding: 100px 50px 100px 100px;
+}
 
-
+.main__poster {
+  max-width: 350px;
+}
 .main__poster img {
   border-radius: 26px;
-  width: 500px;
-  height: 550px;  
+  width: 100%;
   
 }
 
@@ -337,7 +342,7 @@ margin-left: 40px;
     }
   
     .main__poster img {
-      width: 350px; 
+      width: 100%; 
       height: auto; 
     }
   

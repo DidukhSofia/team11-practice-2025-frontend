@@ -1,0 +1,138 @@
+.movie-card{
+    background-color: #F9F9F97A;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    max-width: 850px;
+    min-width: 730px;
+    overflow: hidden;
+    margin: 20px 0;
+    max-height: 300px;
+}
+
+@media (max-width:1050px){
+    .movie-card {
+        width: 100%;
+        max-width: 350px;
+        min-width: 350px;
+        margin: 20px auto;
+        max-height: none
+    }
+}
+
+.movie__content-box {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+@media (max-width:1050px){
+    .movie__content-box {
+        justify-content: center;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+}
+  
+.movie-details {
+    text-align: left;
+    margin-left: 17px;
+}
+
+.movie-poster{
+    width: 100%;
+    width: 300px;
+    max-height: 300px;
+
+}
+@media (max-width:1050px){
+    .movie-poster {
+        width: 350px;
+        max-height: none;
+    }
+}
+
+.movie__content-text{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+@media (max-width:1050px){
+    .movie__content-text {
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+    }
+}
+  
+.movie-title {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 45px;
+    font-family: "Lexend", serif;
+    color: #FFFFFF;
+}
+  
+.movie-rating {
+    color: #ffcc00;
+    font-size: 18px;
+    line-height: 24px;
+}
+  
+.movie-genres{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Lexend", serif;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+.movie-actors{
+    font-size: 14px;
+    font-weight: 600;
+    font-family: "Lexend", serif;
+    line-height: 21px;
+    color: #FFFFFF;
+} 
+  
+.movie-sessions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 250px;
+    overflow: hidden;
+}
+  
+.session-time {
+    background-color: transparent;
+    padding: 4px 8px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 18px;
+    color: black;
+    overflow: hidden;
+}
+  
+.movie-info-button {
+    background-color: #e50914;
+    color: white;
+    border: none;
+    padding: 8px 30px;
+    border-radius: 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+    top: 20px;
+
+}
+
+@media (max-width:1050px){
+    .movie-info-button {
+        display: none;
+    }
+}
+  
+.movie-info-button:hover {
+    background-color: #b20710;
+}
