@@ -32,19 +32,6 @@ const MovieDetails = () => {
 
     return (
       <div style={{ backgroundImage: `url(${movie.backgroundImagePath})`, backgroundAttachment: "fixed" }}>
-        {/* Header */}
-        <header className="header">
-          <div className="header__back">
-          <div className="back__arrow-container">
-          {/* <Link to="/"> */}
-            <img src={Arrow}  className="back__arrow-image" />
-          {/* </Link> */}
-          </div>
-            <span>Головна</span>
-          </div>
-        </header>
-  
-        {/* Main Content */}
         <div className="main">
           <section className="main_context">
             <div className="main__content-text">
