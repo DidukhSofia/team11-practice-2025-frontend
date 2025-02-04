@@ -101,6 +101,7 @@ const MovieDetails = () => {
                   <div key={session.id} className="session">
                     <Link to={`/widget/${session.id}/seatplan`}
                       className="session__time-link"
+
                       onClick={(event) => {
                         event.stopPropagation();
                       }}>
