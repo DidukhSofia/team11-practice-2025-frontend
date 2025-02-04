@@ -1,30 +1,3 @@
-/* Базовий reset */
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
-/* Загальні стилі */
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-a {
-  text-decoration: none;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
 .header {
   align-items: center;
   padding-top: 80px; 
@@ -69,15 +42,18 @@ button {
 }
 
 .main_context {
-    justify-content: space-between;
-    display: flex;
-    gap: 30px;
+  width:100%;
+  display: flex;
+  gap: 50px;
+  justify-content: space-around;
 
-  }
+}
+
 .main__content-text {
     order: 2; 
     padding-right: 35px;
     padding-top: 60px;
+    min-width: 500px;
 
 }
 .main__content-image {
@@ -108,7 +84,9 @@ button {
     margin-bottom: 5px;
     color: #ffffff; 
     font-style: "Lato", serif;
+    display: flex;
     gap: 5px;
+    align-items: center;    
 }
 .star {
     color: gold; 
@@ -116,11 +94,11 @@ button {
   }
 
   .main__genres{
-    font-weight: 200;
     font-size: 20px;
     margin-bottom: 15px;
     color: #FFFFFF;
     font-family: "Lato", sans-serif;
+    display: flex;
     gap: 10px;
 
 }
@@ -129,11 +107,11 @@ button {
 }
 
 .main__duration{
-    font-weight: 200;
     font-size: 20px;
     margin-bottom: 15px;
     color: #FFFFFF;
     font-family: "Lato", sans-serif;
+    display: flex;
     gap: 10px;
 
   }
@@ -142,11 +120,11 @@ button {
 }
 
 .main__release-date{
-    font-weight: 200;
     font-size: 20px;
     margin-bottom: 15px;
     color: #FFFFFF;
     font-family: "Lato", sans-serif;
+    display: flex;
     gap:10px;
   }
   .main__release-date strong {
@@ -154,25 +132,23 @@ button {
 
 }
   .main__actors {
-    font-weight: 200;
     font-size: 20px;
     margin-bottom: 15px;
     color: #FFFFFF;
     max-width: 650px;
     font-family: "Lato", sans-serif;
+    display: flex;
     gap:10px;
 
   }
-  .main__actors strong {
-    padding-right: 10px; 
-}
+
 .main__description {
-    font-weight: 200;
     font-size: 18px;
     margin-bottom: 15px;
     color: #FFFFFF;
     max-width: 650px;
     font-family: "Lato", sans-serif;
+    display: flex;
     gap:10px;
 
   }
@@ -181,12 +157,12 @@ button {
 
 }
   .main__director {
-    font-weight: 200;
     font-size: 20px;
-    margin-bottom: 110px;
+    margin-bottom: 60px;
     color: #FFFFFF;
     max-width: 650px;
     font-family: "Lato", sans-serif;
+    display: flex;
     gap:10px;
 
   }
@@ -194,16 +170,34 @@ button {
     font-weight: 700;
 }
 .main {
-  padding: 100px 50px 100px 100px;
+  padding-left:100px;
+  display: flex;
+  flex-direction:column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../images/background.png");
+  background-size: cover;
+  background-color: #000000;
 }
 
 .main__poster {
-  max-width: 350px;
+  width: 300px;
+  object-fit: cover;
+
 }
 .main__poster img {
   border-radius: 26px;
   width: 100%;
+  width:300px;
+  height:400px;
+  object-fit: cover;
+
   
+}
+
+.main__button{
+  padding: 0 20px;
 }
 
 .main__button-right {
@@ -212,158 +206,117 @@ button {
   padding: 10px 20px;
   font-weight: 800;
   border-radius: 16px;
+
 }
 
 .main__button-right:hover {
-  background-color: #f9f9f97a;
+  background-color: darkred;
   color: #fff;
 }
-.main_schedule {
-    display: flex;
-    justify-content: center; 
-    padding-right: 80px;
-
-  }
- .main_schedule-window{
-    border-radius: 15px;
-    z-index: 2;
-    margin-top: 30px;
-    width: 600px;
-    padding-right: 0;
-    background-color: #F9F9F97A; 
- }
 
 
 
- .schedule__title {
-    font-size: 30px;
-    font-weight: 800;
-    color: #e50914;
-    font-family: "Lato", sans-serif;
-    margin-left: 40px;
-  }
-  .react-datepicker{
-    float: left !important;
-margin-left: 40px;
-}
-  .react-datepicker__month-container {
-    background-color: #f00000; 
-
-}
-.react-datepicker__month{
-    background-color: #5a4e4e;
-}
-
-.react-datepicker__header {
-    background-color: #afaeae;
-    border-bottom: 11px solid #aeaeae;
-}  
-    
-.react-datepicker__week {
+.main__schedule{
+  margin: 30px auto; 
+  background-color: #F9F9F97A;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: 200px;
+  padding: 0 30px;
+  border-radius: 10px;
+}
+
+.schedule__title{
+  color: #e50914;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+}
+
+.main__schedule-window{
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.schedule__dropdown{
+  background-color: rgba(231, 231, 231, 0.74);
+  padding: 10px 40px;
+  border-radius: 4px;
+}
+
+.schedule__sessions{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.session {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  min-width: 80px; 
+}
+
+.session__time-link {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+}
+.session__time-link:hover{
+  color: #ffffff;
 
 }
 
-  .react-datepicker__day {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
+@media (max-width: 780px) {
+  .main_context {
+    flex-direction: column; 
+    align-items: center; 
+    text-align: left;
+  }
+  .main{
+    padding-right:60px;
   }
 
-  .react-datepicker__day:hover {
-    background-color: #f12525;
+  .main__content-text {
+    padding-right: 0;
+    padding-top: 20px;
+
   }
-  .react-datepicker__day--today {
-    background-color: #ffe600;
-    color: black;
-    font-weight: bold;
+
+  .main__content-image {
+    padding-left: 0;
+    padding-top: 20px;
   }
-  .react-datepicker__day--selected{
-    background-color: #ff1800 !important;
+
+  .main__title {
+    font-size: 36px; 
+  }
+
+  .main__age-rating,
+  .main__rating,
+  .main__genres,
+  .main__duration,
+  .main__release-date,
+  .main__actors,
+  .main__description,
+  .main__director {
+    font-size: 16px; 
+  }
+
+  .main__poster img {
+    width: 100%; 
+    height: auto; 
+  }
+
+  .main_schedule {
+    flex-direction: column; 
+    width: 100%; 
+  padding-right: 0px ;
+  }
 }
-.schedule__sessions {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 10px; 
-    padding: 45px 20px 10px;
-  }
-  
-  .session {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 10px;
-    min-width: 80px; 
-  }
-  
-  .session__time-link {
-    font-size: 20px;
-    font-weight: bold;
-    color: #ff1800;
-  }
-  .session__time-link:hover{
-    color: #ffffff;
-
-  }
-
-  @media (max-width: 768px) {
-    .main_context {
-      flex-direction: column; 
-      align-items: center; 
-      text-align: left;
-    }
-  
-    .main__content-text {
-      padding-right: 0;
-      padding-top: 20px;
-
-    }
-  
-    .main__content-image {
-      padding-left: 0;
-      padding-top: 20px;
-    }
-  
-    .main__title {
-      font-size: 36px; 
-    }
-  
-    .main__age-rating,
-    .main__rating,
-    .main__genres,
-    .main__duration,
-    .main__release-date,
-    .main__actors,
-    .main__description,
-    .main__director {
-      font-size: 16px; 
-    }
-  
-    .main__poster img {
-      width: 100%; 
-      height: auto; 
-    }
-  
-    .main__button-right {
-      margin-top: 20px; 
-    }
-  
-    .main_schedule {
-      flex-direction: column; 
-      width: 100%; 
-    padding-right: 0px ;
-    }
-  
-    .main_schedule-window {
-      width: 100%; 
-      padding: 20px; 
-    }
-  
-    .schedule__sessions {
-      justify-content: center;
-      gap: 5px; 
-    }
-  }
-  

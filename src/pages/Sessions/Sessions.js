@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Sessions.css";
+import User from "../../images/user-profil-image.png";
 import Filter from "../../components/Filter/Filter";
-import user from "../../images/user-profil-image.png";
-
-const Sessions = () => {
-  return (
-    <section className="sessions">
-      <Head />
-      <Filter />
-    </section>
-  );
-};
-export default Sessions;
 
 function Head(){
   const [selectedOption, setSelectedOption] = useState("");
@@ -22,7 +12,6 @@ function Head(){
     setSelectedOption(event.target.value);
   };
 
-  // Функція для перемикання стану випадаючого списку
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -49,7 +38,7 @@ function Head(){
 
         <div className="authentication__user">
           <img
-            src={user}
+            src={User}
             alt="User Profile"
             className="user__profil-image"
           />
@@ -58,3 +47,13 @@ function Head(){
     </div>
   );
 }
+
+const Sessions = () => {
+  return (
+    <section className="sessions">
+      <Head/>
+      <Filter />
+    </section>
+  );
+};
+export default Sessions;
