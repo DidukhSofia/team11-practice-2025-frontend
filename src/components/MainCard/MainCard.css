@@ -1,0 +1,76 @@
+.movies-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px 50px;
+  }
+  
+  .movie-mainCard {
+
+    border-radius: 15px;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  
+  .movie-mainCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .mainCard__content-box {
+    position: relative;
+    width: 100%;
+  }
+  
+  .mainCard-poster {
+    width: 250px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    position: relative;
+  }
+  
+  .mainCard__content-overlay {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    color: white;
+    padding: 15px;
+    line-height: 30px;
+  }
+
+  .mainCard__content-left{
+    position: absolute;
+    bottom: 15px !important;
+    right: 10px;
+    line-height: 15px;
+    text-align: right;
+  }
+  
+  .mainCard-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  
+  .mainCard-genres {
+    color: lightgray;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .mainCard-info-button {
+    display: inline-block;
+    background: red;
+    color: black;
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .mainCard-info-button:hover {
+    background: darkred;
+    color: white;
+  }
+  

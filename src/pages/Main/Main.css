@@ -1,0 +1,46 @@
+.LuxCinema__bg{
+    position: relative;
+    width: 100%;
+}
+
+.Background-image{
+    position: relative;
+    width: 100%;
+    
+}
+
+.main-button{
+    padding: 20px 55px;
+    background-color: black;
+    color: red;
+    font-size: 18px;
+    position: absolute;
+    bottom: 60px;
+    right: 40px;
+    border-radius: 16px;
+    text-align: center;
+    font-weight: bold;
+    align-items: center;
+}
+
+
+.LuxCinema-title{
+    padding: 10px 100px;
+    font-size: 52px;
+    color: red;
+    font-weight: 700;
+}
+
+.movies-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+  }
+
+.Main{
+    background-image: url("../../images/background.png");
+    background-size: cover;
+    background-color: #000000;
+}

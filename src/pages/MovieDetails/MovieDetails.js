@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./MovieDetails.css";
-import Arrow from "../../images/back-arrow.png";
-import { format, parseISO, isWithinInterval, addDays } from "date-fns";
+import { format, parseISO, addDays } from "date-fns";
 import { uk } from "date-fns/locale";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { FaStar } from "react-icons/fa";
+
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const today = new Date();
-  const thirtyDaysFromNow = addDays(today, 30);
-  const [selectedDate, setSelectedDate] = useState(today);
+  const thirtyDaysFromNow = addDays(today, 14);
+  const [selectedDate, setSelectedDate] = useState(format(today, "yyyy-MM-dd"));
   const [movie, setMovie] = useState(null);
+  const availableDates = [];
+
+  for (let d = today; d <= thirtyDaysFromNow; d = addDays(d, 1)) {
+    availableDates.push(format(d, "yyyy-MM-dd"));
+  }
 
   useEffect(() => {
     fetch("/Get_All.json")
@@ -26,98 +30,91 @@ const MovieDetails = () => {
 
   if (!movie) return <div>Фільм не знайдено</div>;
 
-  const uniqueDates = [...new Set(movie.sessions.map((session) => session.startTime.split("T")[0]))]
-    .filter((date) => isWithinInterval(parseISO(date), { start: today, end: thirtyDaysFromNow }))
-    .sort();
+  return (
+    <div style={{ backgroundImage: `url(${movie.backgroundImagePath})`, backgroundAttachment: "fixed" }}>
+      <div className="main">
+        <section className="main_context">
+          <div className="main__content-text">
+            <h1 className="main__title">{movie.filmName}</h1>
+            <p className="main__age-rating">{movie.ageRating}+</p>
+            <div className="mainCard-rating">
+            {Array(Math.round(movie.voteAverage / 2))
+              .fill("")
+              .map((_, index) => (
+                <FaStar key={index} style={{ color: "red", fontSize: "18px" }} />
+              ))}
+            </div>
+            <p className="main__genres">
+              <strong>Жанр: </strong>
+              {movie.genres.map((genre) => genre.name).join(", ")}
+            </p>
+            <p className="main__duration">
+              <strong>Тривалість: </strong>
+              {movie.duration} хв
+            </p>
+            <p className="main__release-date">
+              <strong>Дата релізу: </strong>
+              {new Date(movie.releaseDate).toLocaleDateString("uk-UA")}
+            </p>
+            <p className="main__actors">
+              <strong>У головних ролях:</strong>
+              {movie.actors.map((actor) => actor.name).join(", ")}
+            </p>
+            <p className="main__description">{movie.description}</p>
+            <p className="main__director">
+              <strong>Режисер: </strong>
+              {movie.director.name}
+            </p>
+            <div className="main__button">
+              <a href={movie.trailer} className="main__button main__button-right">
+                Дивитися трейлер
+              </a>
+            </div>
+          </div>
+          <div className="main__content-image">
+            <div className="main__poster">
+              <img src={movie.posterPath} alt="Movie Poster"/>
+            </div>
+          </div>
+        </section>
+        <section className="main__schedule">
+          <h2 className="schedule__title">Розклад сеансів</h2>
+          <div className="main__schedule-window">
+            <div className="schedule__dropdown">
+              <label htmlFor="date-select">Оберіть дату: </label>
+              <select
+                id="date-select"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              >
+                {availableDates.map((date) => (
+                  <option key={date} value={date}>
+                    {format(parseISO(date), "dd.MM", { locale: uk })}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="schedule__sessions">
+              {movie.sessions
+                .filter((session) => session.startTime.split("T")[0] === selectedDate)
+                .map((session) => (
+                  <div key={session.id} className="session">
+                    <Link to={`/widget/${session.id}/seatplan`}
+                      className="session__time-link"
 
-    return (
-      <div style={{ backgroundImage: `url(${movie.backgroundImagePath})`, backgroundAttachment: "fixed" }}>
-        <div className="main">
-          <section className="main_context">
-            <div className="main__content-text">
-              {/* Movie Info Section */}
-              <h1 className="main__title">{movie.filmName}</h1>
-              <p className="main__age-rating">{movie.ageRating}+</p>
-              <h3 className="main__rating">
-                {movie.voteAverage.toFixed(1)} <span className="star">★</span>
-              </h3>
-              <p className="main__genres">
-                <strong>Жанр: </strong>
-                {movie.genres.map((genre) => genre.name).join(", ")}
-              </p>
-              <p className="main__duration">
-                <strong>Тривалість: </strong>
-                {movie.duration} хв
-              </p>
-              <p className="main__release-date">
-                <strong>Дата релізу: </strong>
-                {new Date(movie.releaseDate).toLocaleDateString("uk-UA")}
-              </p>
-              <p className="main__actors">
-                <strong>У головних ролях: </strong>
-                {movie.actors.map((actor) => actor.name).join(", ")}
-              </p>
-              <p className="main__description">{movie.description}</p>
-              <p className="main__director">
-                <strong>Режисер: </strong>
-                {movie.director.name}
-              </p>
-              <div className="main__button">
-                <a href={movie.trailer} className="main__button main__button-right">
-                  Дивитися трейлер
-                </a>
-              </div>
+                      onClick={(event) => {
+                        event.stopPropagation();
+                      }}>
+                      {format(parseISO(session.startTime), "HH:mm")}
+                    </Link>
+                  </div>
+                ))}
             </div>
-            <div className="main__content-image">
-              <div className="main__poster">
-                <img src={movie.posterPath} />
-              </div>
-            </div>
-          </section>
-          <section className="main_schedule">
-    <div className="main_schedule-window">
-      <h2 className="schedule__title">Розклад сеансів</h2>
-  
-      {/* Вибір дати */}
-      <div className="schedule__calendar">
-        <DatePicker
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          minDate={today}
-          maxDate={thirtyDaysFromNow}
-          dateFormat="dd/MM/yyyy"
-          locale={uk}
-          inline
-        />
-      </div>
-  
-      {/* Список сеансів */}
-      <div className="schedule__sessions">
-        {movie.sessions
-          .filter((session) => {
-            const sessionDate = session.startTime.split("T")[0];
-            return sessionDate === format(selectedDate, "yyyy-MM-dd");
-          })
-          .map((session) => (
-            <div key={session.id} className="session">
-              <Link
-                to={`/buy-ticket?movieId=${movie.id}&time=${session.startTime}`}
-                className="session__time-link"
-                onClick={(event) => {
-                  event.stopPropagation(); 
-                }}>
-                {format(parseISO(session.startTime), "HH:mm")}
-                </Link>
-                </div>
-          ))}
+          </div>
+        </section>
       </div>
     </div>
-  </section>
-  
-        </div>
-      </div>
-    );
-  };
-  
-  export default MovieDetails;
-  
+  );
+};
+
+export default MovieDetails;
