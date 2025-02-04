@@ -10,7 +10,7 @@ function LuxCinema() {
     <div className="LuxCinema">
       <div className="LuxCinema__bg">
         <img src={Background} alt="Main Background" className="Background-image" />
-        <Link to={`/recommendations`} className="main-link-button">
+        <Link to={`/movies`} className="main-link-button">
           <p className="main-button">ЗАРАЗ У КІНО</p>
         </Link>
       </div>
