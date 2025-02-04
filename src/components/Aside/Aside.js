@@ -7,7 +7,7 @@ import {
   faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../img/aside-logo.png";
+import logo from "../../images/aside-logo.png";
 
 const Aside = () => {
   const location = useLocation();

@@ -7,15 +7,19 @@
         "id": 1,
         "name": "Christopher Nolan"
       },
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      "trailer": "https://www.youtube.com/watch?v=eY-pRQ2eMG8",
+      "description": "A mind-bending thriller",
+      "trailer": "https://example.com/trailer/inception",
       "duration": 148,
       "ageRating": 13,
       "releaseDate": "2010-07-16",
-      "posterPath": "/images/inception/poster.jpg",
-      "backgroundImagePath": "/images/inception/detail.png",
-      "voteAverage": 9.3,
+      "posterPath": "/img/loki-img.png",
+      "backgroundImagePath": "/images/inception/background.jpg",
+      "voteAverage": 1,
       "voteCount": 200000,
+      "rentalPeriod": {
+        "startDate": "2025-02-07",
+        "endDate": "2025-02-14"
+      },
       "actors": [
         {
           "id": 1,
@@ -39,8 +43,8 @@
       "sessions": [
         {
           "id": 1,
-          "startTime": "2025-01-31T18:00:00",
-          "endTime": "2025-01-31T19:30:00",
+          "startTime": "2025-02-05T14:00:00",
+          "endTime": "2025-02-05T16:30:00",
           "price": 12.99,
           "hall": "Main Hall",
           "salesStatistics": {
@@ -65,284 +69,298 @@
         },
         {
           "id": 2,
-          "startTime": "2025-02-01T20:00:00",
-          "endTime": "2025-02-01T21:30:00",
+          "startTime": "2025-02-09T17:00:00",
+          "endTime": "2025-02-09T19:30:00",
           "price": 14.99,
-          "hall": "Main Hall",
+          "hall": "IMAX",
           "salesStatistics": {
             "id": 2,
-            "ticketsSold": 50,
-            "totalIncome": 749.5
+            "ticketsSold": 80,
+            "totalIncome": 1199
           },
-          "bookings": []
+          "bookings": [
+            {
+              "id": 2,
+              "user": {
+                "id": 2,
+                "username": "jane_doe",
+                "email": "jane.doe@example.com"
+              },
+              "bookingDate": "2025-01-22",
+              "numberOfTickets": 3,
+              "totalPrice": 44.97,
+              "chairNumber": "C1, C2, C3"
+            }
+          ]
         },
         {
           "id": 3,
-          "startTime": "2025-02-01T22:00:00",
-          "endTime": "2025-02-01T00:30:00",
-          "price": 15.99,
-          "hall": "VIP Hall",
+          "startTime": "2025-01-23T10:00:00",
+          "endTime": "2025-01-23T11:30:00",
+          "price": 14.99,
+          "hall": "IMAX",
           "salesStatistics": {
-            "id": 3,
-            "ticketsSold": 30,
-            "totalIncome": 479.7
+            "id": 2,
+            "ticketsSold": 80,
+            "totalIncome": 1199
           },
-          "bookings": []
+          "bookings": [
+            {
+              "id": 2,
+              "user": {
+                "id": 2,
+                "username": "jane_doe",
+                "email": "jane.doe@example.com"
+              },
+              "bookingDate": "2025-01-22",
+              "numberOfTickets": 3,
+              "totalPrice": 44.97,
+              "chairNumber": "C1, C2, C3"
+            }
+          ]
         },
         {
           "id": 4,
-          "startTime": "2025-01-30T14:00:00",
-          "endTime": "2025-01-30T16:30:00",
-          "price": 11.99,
-          "hall": "Main Hall",
+          "startTime": "2025-02-10T08:00:00",
+          "endTime": "2025-02-10T9:30:00",
+          "price": 14.99,
+          "hall": "IMAX",
           "salesStatistics": {
-            "id": 4,
+            "id": 2,
             "ticketsSold": 80,
-            "totalIncome": 959.2
+            "totalIncome": 1199
           },
-          "bookings": []
+          "bookings": [
+            {
+              "id": 2,
+              "user": {
+                "id": 2,
+                "username": "jane_doe",
+                "email": "jane.doe@example.com"
+              },
+              "bookingDate": "2025-01-22",
+              "numberOfTickets": 3,
+              "totalPrice": 44.97,
+              "chairNumber": "C1, C2, C3"
+            }
+          ]
+        },{
+          "id": 5,
+          "startTime": "2025-02-05T19:00:00",
+          "endTime": "2025-02-05T20:30:00",
+          "price": 14.99,
+          "hall": "IMAX",
+          "salesStatistics": {
+            "id": 2,
+            "ticketsSold": 80,
+            "totalIncome": 1199
+          },
+          "bookings": [
+            {
+              "id": 2,
+              "user": {
+                "id": 2,
+                "username": "jane_doe",
+                "email": "jane.doe@example.com"
+              },
+              "bookingDate": "2025-01-22",
+              "numberOfTickets": 3,
+              "totalPrice": 44.97,
+              "chairNumber": "C1, C2, C3"
+            }
+          ]
         }
       ]
     },
     {
       "id": 2,
-      "filmName": "The Dark Knight",
+      "filmName": "Chernobyl",
       "director": {
-        "id": 2,
+        "id": 1,
         "name": "Christopher Nolan"
       },
-      "description": "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham, forcing Batman to determine the true nature of justice.",
-      "trailer": "https://www.youtube.com/watch?v=EXeTwQWrcwY",
+      "description": "A gripping superhero film",
+      "trailer": "https://example.com/trailer/darkknight",
       "duration": 152,
       "ageRating": 13,
       "releaseDate": "2008-07-18",
-      "posterPath": "/images/inception/poster.jpg",
-      "backgroundImagePath": "/images/inception/detail.png",
-      "voteAverage": 9.0,
-      "voteCount": 230000,
+      "posterPath": "/img/chernobel.png",
+      "backgroundImagePath": "/images/darkknight/background.jpg",
+      "voteAverage": 2,
+      "voteCount": 250000,
+      "rentalPeriod": {
+        "startDate": "2025-02-01",
+        "endDate": "2025-02-08"
+      },
       "actors": [
         {
-          "id": 3,
+          "id": 1,
           "name": "Christian Bale"
         },
         {
-          "id": 4,
+          "id": 2,
           "name": "Heath Ledger"
         }
       ],
       "genres": [
         {
-          "id": 3,
+          "id": 1,
           "name": "Action"
         },
         {
-          "id": 4,
+          "id": 2,
           "name": "Crime"
-        },
-        {
-          "id": 5,
-          "name": "Drama"
         }
       ],
       "sessions": [
         {
           "id": 1,
-          "startTime": "2025-01-30T17:00:00",
-          "endTime": "2025-01-30T19:30:00",
-          "price": 13.99,
-          "hall": "Main Hall",
+          "startTime": "2025-02-10T16:00:00",
+          "endTime": "2025-02-10T18:30:00",
+          "price": 15.99,
+          "hall": "IMAX",
           "salesStatistics": {
             "id": 1,
-            "ticketsSold": 120,
-            "totalIncome": 1678.8
+            "ticketsSold": 150,
+            "totalIncome": 2398
           },
           "bookings": [
             {
               "id": 1,
               "user": {
-                "id": 2,
-                "username": "mary_smith",
-                "email": "mary.smith@example.com"
+                "id": 1,
+                "username": "john_doe",
+                "email": "john.doe@example.com"
               },
-              "bookingDate": "2025-01-21",
-              "numberOfTickets": 3,
-              "totalPrice": 41.97,
-              "chairNumber": "B1, B2, B3"
+              "bookingDate": "2025-02-09",
+              "numberOfTickets": 2,
+              "totalPrice": 31.98,
+              "chairNumber": "B1, B2"
             }
           ]
         },
         {
           "id": 2,
-          "startTime": "2025-01-30T20:30:00",
-          "endTime": "2025-01-30T23:00:00",
-          "price": 15.49,
+          "startTime": "2025-02-10T19:00:00",
+          "endTime": "2025-02-10T21:30:00",
+          "price": 16.99,
           "hall": "Main Hall",
           "salesStatistics": {
             "id": 2,
-            "ticketsSold": 65,
-            "totalIncome": 1006.85
+            "ticketsSold": 120,
+            "totalIncome": 2038
           },
-          "bookings": []
+          "bookings": [
+            {
+              "id": 2,
+              "user": {
+                "id": 2,
+                "username": "jane_doe",
+                "email": "jane.doe@example.com"
+              },
+              "bookingDate": "2025-02-09",
+              "numberOfTickets": 3,
+              "totalPrice": 50.97,
+              "chairNumber": "D1, D2, D3"
+            }
+          ]
         }
       ]
     },
-    
+    {
+      "id": 3,
+      "filmName": "Софучка супер клас",
+      "director": {
+        "id": 1,
+        "name": "Christopher Nolan"
+      },
+      "description": "A gripping superhero film",
+      "trailer": "https://example.com/trailer/darkknight",
+      "duration": 152,
+      "ageRating": 13,
+      "releaseDate": "2008-07-18",
+      "posterPath": "/img/Sofia-image.jpg",
+      "backgroundImagePath": "/images/darkknight/background.jpg",
+      "voteAverage": 9.0,
+      "voteCount": 250000,
+      "rentalPeriod": {
+        "startDate": "2025-02-04",
+        "endDate": "2025-02-11"
+      },
+      "actors": [
         {
-          "id": 3,
-          "filmName": "Interstellar",
-          "director": {
+          "id": 1,
+          "name": "Christian Bale"
+        },
+        {
+          "id": 2,
+          "name": "Heath Ledger"
+        }
+      ],
+      "genres": [
+        {
+          "id": 1,
+          "name": "Action"
+        },
+        {
+          "id": 2,
+          "name": "Crime"
+        }
+      ],
+      "sessions": [
+        {
+          "id": 1,
+          "startTime": "2025-02-10T16:00:00",
+          "endTime": "2025-02-10T18:30:00",
+          "price": 15.99,
+          "hall": "IMAX",
+          "salesStatistics": {
             "id": 1,
-            "name": "Christopher Nolan"
+            "ticketsSold": 150,
+            "totalIncome": 2398
           },
-          "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
-          "trailer": "https://www.youtube.com/watch?v=zSWdZVtXT7E",
-          "duration": 169,
-          "ageRating": 13,
-          "releaseDate": "2014-11-07",
-          "posterPath": "/images/interstellar/poster.jpg",
-          "backgroundImagePath": "/images/interstellar/detail.png",
-          "voteAverage": 8.6,
-          "voteCount": 150000,
-          "actors": [
-            {
-              "id": 5,
-              "name": "Matthew McConaughey"
-            },
-            {
-              "id": 6,
-              "name": "Anne Hathaway"
-            }
-          ],
-          "genres": [
+          "bookings": [
             {
               "id": 1,
-              "name": "Sci-Fi"
-            },
-            {
-              "id": 5,
-              "name": "Drama"
-            }
-          ],
-          "sessions": [
-            {
-              "id": 1,
-              "startTime": "2025-02-02T18:00:00",
-              "endTime": "2025-02-02T21:00:00",
-              "price": 13.49,
-              "hall": "Main Hall",
-              "salesStatistics": {
+              "user": {
                 "id": 1,
-                "ticketsSold": 90,
-                "totalIncome": 1214.1
+                "username": "john_doe",
+                "email": "john.doe@example.com"
               },
-              "bookings": []
+              "bookingDate": "2025-02-09",
+              "numberOfTickets": 2,
+              "totalPrice": 31.98,
+              "chairNumber": "B1, B2"
             }
           ]
         },
         {
-          "id": 4,
-          "filmName": "The Matrix",
-          "director": {
-            "id": 3,
-            "name": "The Wachowskis"
+          "id": 2,
+          "startTime": "2025-02-10T19:00:00",
+          "endTime": "2025-02-10T21:30:00",
+          "price": 16.99,
+          "hall": "Main Hall",
+          "salesStatistics": {
+            "id": 2,
+            "ticketsSold": 120,
+            "totalIncome": 2038
           },
-          "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
-          "trailer": "https://www.youtube.com/watch?v=vKQi3bBA1y8",
-          "duration": 136,
-          "ageRating": 16,
-          "releaseDate": "1999-03-31",
-          "posterPath": "/images/inception/poster.jpg",
-          "backgroundImagePath": "/images/matrix/detail.png",
-          "voteAverage": 8.7,
-          "voteCount": 180000,
-          "actors": [
+          "bookings": [
             {
-              "id": 7,
-              "name": "Keanu Reeves"
-            },
-            {
-              "id": 8,
-              "name": "Laurence Fishburne"
-            }
-          ],
-          "genres": [
-            {
-              "id": 1,
-              "name": "Sci-Fi"
-            },
-            {
-              "id": 3,
-              "name": "Action"
-            }
-          ],
-          "sessions": [
-            {
-              "id": 1,
-              "startTime": "2025-02-03T19:00:00",
-              "endTime": "2025-02-03T21:30:00",
-              "price": 12.49,
-              "hall": "VIP Hall",
-              "salesStatistics": {
-                "id": 1,
-                "ticketsSold": 70,
-                "totalIncome": 874.3
+              "id": 2,
+              "user": {
+                "id": 2,
+                "username": "jane_doe",
+                "email": "jane.doe@example.com"
               },
-              "bookings": []
-            }
-          ]
-        },
-        {
-          "id": 5,
-          "filmName": "Gladiator",
-          "director": {
-            "id": 4,
-            "name": "Ridley Scott"
-          },
-          "description": "A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
-          "trailer": "https://www.youtube.com/watch?v=owK1qxDselE",
-          "duration": 155,
-          "ageRating": 18,
-          "releaseDate": "2000-05-05",
-          "posterPath": "/images/gladiator/poster.jpg",
-          "backgroundImagePath": "/images/gladiator/detail.png",
-          "voteAverage": 8.5,
-          "voteCount": 140000,
-          "actors": [
-            {
-              "id": 9,
-              "name": "Russell Crowe"
-            },
-            {
-              "id": 10,
-              "name": "Joaquin Phoenix"
-            }
-          ],
-          "genres": [
-            {
-              "id": 5,
-              "name": "Drama"
-            },
-            {
-              "id": 3,
-              "name": "Action"
-            }
-          ],
-          "sessions": [
-            {
-              "id": 1,
-              "startTime": "2025-02-04T20:00:00",
-              "endTime": "2025-02-04T22:30:00",
-              "price": 14.49,
-              "hall": "Main Hall",
-              "salesStatistics": {
-                "id": 1,
-                "ticketsSold": 85,
-                "totalIncome": 1231.65
-              },
-              "bookings": []
+              "bookingDate": "2025-02-09",
+              "numberOfTickets": 3,
+              "totalPrice": 50.97,
+              "chairNumber": "D1, D2, D3"
             }
           ]
         }
       ]
     }
-    
+  ]
+}

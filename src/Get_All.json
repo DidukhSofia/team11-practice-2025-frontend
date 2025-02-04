@@ -14,8 +14,12 @@
       "releaseDate": "2010-07-16",
       "posterPath": "/img/loki-img.png",
       "backgroundImagePath": "/images/inception/background.jpg",
-      "voteAverage": 8.1,
+      "voteAverage": 1,
       "voteCount": 200000,
+      "rentalPeriod": {
+        "startDate": "2025-02-07",
+        "endDate": "2025-02-14"
+      },
       "actors": [
         {
           "id": 1,
@@ -39,8 +43,8 @@
       "sessions": [
         {
           "id": 1,
-          "startTime": "2025-01-23T14:00:00",
-          "endTime": "2025-01-23T16:30:00",
+          "startTime": "2025-02-05T14:00:00",
+          "endTime": "2025-02-05T16:30:00",
           "price": 12.99,
           "hall": "Main Hall",
           "salesStatistics": {
@@ -65,8 +69,8 @@
         },
         {
           "id": 2,
-          "startTime": "2025-01-23T17:00:00",
-          "endTime": "2025-01-23T19:30:00",
+          "startTime": "2025-02-09T17:00:00",
+          "endTime": "2025-02-09T19:30:00",
           "price": 14.99,
           "hall": "IMAX",
           "salesStatistics": {
@@ -117,8 +121,8 @@
         },
         {
           "id": 4,
-          "startTime": "2025-01-23T08:00:00",
-          "endTime": "2025-01-23T9:30:00",
+          "startTime": "2025-02-10T08:00:00",
+          "endTime": "2025-02-10T9:30:00",
           "price": 14.99,
           "hall": "IMAX",
           "salesStatistics": {
@@ -142,8 +146,8 @@
           ]
         },{
           "id": 5,
-          "startTime": "2025-01-23T19:00:00",
-          "endTime": "2025-01-23T20:30:00",
+          "startTime": "2025-02-05T19:00:00",
+          "endTime": "2025-02-05T20:30:00",
           "price": 14.99,
           "hall": "IMAX",
           "salesStatistics": {
@@ -170,7 +174,7 @@
     },
     {
       "id": 2,
-      "filmName": "The Dark Knight",
+      "filmName": "Chernobyl",
       "director": {
         "id": 1,
         "name": "Christopher Nolan"
@@ -180,10 +184,14 @@
       "duration": 152,
       "ageRating": 13,
       "releaseDate": "2008-07-18",
-      "posterPath": "/img/loki-img.png",
+      "posterPath": "/img/chernobel.png",
       "backgroundImagePath": "/images/darkknight/background.jpg",
-      "voteAverage": 9.0,
+      "voteAverage": 2,
       "voteCount": 250000,
+      "rentalPeriod": {
+        "startDate": "2025-02-01",
+        "endDate": "2025-02-08"
+      },
       "actors": [
         {
           "id": 1,
@@ -275,6 +283,10 @@
       "backgroundImagePath": "/images/darkknight/background.jpg",
       "voteAverage": 9.0,
       "voteCount": 250000,
+      "rentalPeriod": {
+        "startDate": "2025-02-04",
+        "endDate": "2025-02-11"
+      },
       "actors": [
         {
           "id": 1,
