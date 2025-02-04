@@ -1,5 +1,6 @@
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 
 import "./App.css";
@@ -16,6 +17,7 @@ const App = () => {
           <Routes>
           <Route path="/movies" element={<MoviesPage />} />
             <Route path="/" element={<Main />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/sessions" element={<Sessions />} />
             <Route path="/movies/:movieId" element={<MovieDetails />} />
           </Routes>
