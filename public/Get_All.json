@@ -3,364 +3,312 @@
     {
       "id": 1,
       "filmName": "Inception",
-      "director": {
-        "id": 1,
-        "name": "Christopher Nolan"
-      },
-      "description": "A mind-bending thriller",
-      "trailer": "https://example.com/trailer/inception",
+      "description": "A thief with the ability to enter people's dreams and steal their secrets.",
+      "trailer": "https://www.youtube.com/watch?v=YoHD9XEInc0",
       "duration": 148,
       "ageRating": 13,
       "releaseDate": "2010-07-16",
       "posterPath": "/img/loki-img.png",
       "backgroundImagePath": "/images/inception/background.jpg",
-      "voteAverage": 1,
-      "voteCount": 200000,
-      "rentalPeriod": {
-        "startDate": "2025-02-07",
-        "endDate": "2025-02-14"
-      },
-      "actors": [
-        {
-          "id": 1,
-          "name": "Leonardo DiCaprio"
-        },
-        {
-          "id": 2,
-          "name": "Joseph Gordon-Levitt"
-        }
-      ],
-      "genres": [
-        {
-          "id": 1,
-          "name": "Sci-Fi"
-        },
-        {
-          "id": 2,
-          "name": "Thriller"
-        }
-      ],
-      "sessions": [
-        {
-          "id": 1,
-          "startTime": "2025-02-05T14:00:00",
-          "endTime": "2025-02-05T16:30:00",
-          "price": 12.99,
-          "hall": "Main Hall",
-          "salesStatistics": {
-            "id": 1,
-            "ticketsSold": 100,
-            "totalIncome": 1299
-          },
-          "bookings": [
-            {
-              "id": 1,
-              "user": {
-                "id": 1,
-                "username": "john_doe",
-                "email": "john.doe@example.com"
-              },
-              "bookingDate": "2025-01-22",
-              "numberOfTickets": 2,
-              "totalPrice": 25.98,
-              "chairNumber": "A1, A2"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "startTime": "2025-02-09T17:00:00",
-          "endTime": "2025-02-09T19:30:00",
-          "price": 14.99,
-          "hall": "IMAX",
-          "salesStatistics": {
-            "id": 2,
-            "ticketsSold": 80,
-            "totalIncome": 1199
-          },
-          "bookings": [
-            {
-              "id": 2,
-              "user": {
-                "id": 2,
-                "username": "jane_doe",
-                "email": "jane.doe@example.com"
-              },
-              "bookingDate": "2025-01-22",
-              "numberOfTickets": 3,
-              "totalPrice": 44.97,
-              "chairNumber": "C1, C2, C3"
-            }
-          ]
-        },
-        {
-          "id": 3,
-          "startTime": "2025-01-23T10:00:00",
-          "endTime": "2025-01-23T11:30:00",
-          "price": 14.99,
-          "hall": "IMAX",
-          "salesStatistics": {
-            "id": 2,
-            "ticketsSold": 80,
-            "totalIncome": 1199
-          },
-          "bookings": [
-            {
-              "id": 2,
-              "user": {
-                "id": 2,
-                "username": "jane_doe",
-                "email": "jane.doe@example.com"
-              },
-              "bookingDate": "2025-01-22",
-              "numberOfTickets": 3,
-              "totalPrice": 44.97,
-              "chairNumber": "C1, C2, C3"
-            }
-          ]
-        },
-        {
-          "id": 4,
-          "startTime": "2025-02-10T08:00:00",
-          "endTime": "2025-02-10T9:30:00",
-          "price": 14.99,
-          "hall": "IMAX",
-          "salesStatistics": {
-            "id": 2,
-            "ticketsSold": 80,
-            "totalIncome": 1199
-          },
-          "bookings": [
-            {
-              "id": 2,
-              "user": {
-                "id": 2,
-                "username": "jane_doe",
-                "email": "jane.doe@example.com"
-              },
-              "bookingDate": "2025-01-22",
-              "numberOfTickets": 3,
-              "totalPrice": 44.97,
-              "chairNumber": "C1, C2, C3"
-            }
-          ]
-        },{
-          "id": 5,
-          "startTime": "2025-02-05T19:00:00",
-          "endTime": "2025-02-05T20:30:00",
-          "price": 14.99,
-          "hall": "IMAX",
-          "salesStatistics": {
-            "id": 2,
-            "ticketsSold": 80,
-            "totalIncome": 1199
-          },
-          "bookings": [
-            {
-              "id": 2,
-              "user": {
-                "id": 2,
-                "username": "jane_doe",
-                "email": "jane.doe@example.com"
-              },
-              "bookingDate": "2025-01-22",
-              "numberOfTickets": 3,
-              "totalPrice": 44.97,
-              "chairNumber": "C1, C2, C3"
-            }
-          ]
-        }
-      ]
+      "voteAverage": 8.8,
+      "voteCount": 20000,
+      "directorId": 1,
+      "genres": [1, 2],
+      "actors": [1, 2, 3]
     },
     {
       "id": 2,
-      "filmName": "Chernobyl",
-      "director": {
-        "id": 1,
-        "name": "Christopher Nolan"
-      },
-      "description": "A gripping superhero film",
-      "trailer": "https://example.com/trailer/darkknight",
+      "filmName": "The Dark Knight",
+      "description": "Batman sets out to dismantle the remaining criminal organizations that plague Gotham.",
+      "trailer": "https://www.youtube.com/watch?v=EXeTwQWrcwY",
       "duration": 152,
       "ageRating": 13,
       "releaseDate": "2008-07-18",
       "posterPath": "/img/chernobel.png",
-      "backgroundImagePath": "/images/darkknight/background.jpg",
-      "voteAverage": 2,
-      "voteCount": 250000,
-      "rentalPeriod": {
-        "startDate": "2025-02-01",
-        "endDate": "2025-02-08"
-      },
-      "actors": [
-        {
-          "id": 1,
-          "name": "Christian Bale"
-        },
-        {
-          "id": 2,
-          "name": "Heath Ledger"
-        }
-      ],
-      "genres": [
-        {
-          "id": 1,
-          "name": "Action"
-        },
-        {
-          "id": 2,
-          "name": "Crime"
-        }
-      ],
-      "sessions": [
-        {
-          "id": 1,
-          "startTime": "2025-02-10T16:00:00",
-          "endTime": "2025-02-10T18:30:00",
-          "price": 15.99,
-          "hall": "IMAX",
-          "salesStatistics": {
-            "id": 1,
-            "ticketsSold": 150,
-            "totalIncome": 2398
-          },
-          "bookings": [
-            {
-              "id": 1,
-              "user": {
-                "id": 1,
-                "username": "john_doe",
-                "email": "john.doe@example.com"
-              },
-              "bookingDate": "2025-02-09",
-              "numberOfTickets": 2,
-              "totalPrice": 31.98,
-              "chairNumber": "B1, B2"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "startTime": "2025-02-10T19:00:00",
-          "endTime": "2025-02-10T21:30:00",
-          "price": 16.99,
-          "hall": "Main Hall",
-          "salesStatistics": {
-            "id": 2,
-            "ticketsSold": 120,
-            "totalIncome": 2038
-          },
-          "bookings": [
-            {
-              "id": 2,
-              "user": {
-                "id": 2,
-                "username": "jane_doe",
-                "email": "jane.doe@example.com"
-              },
-              "bookingDate": "2025-02-09",
-              "numberOfTickets": 3,
-              "totalPrice": 50.97,
-              "chairNumber": "D1, D2, D3"
-            }
-          ]
-        }
-      ]
+      "backgroundImagePath": "/images/dark-knight/background.jpg",
+      "voteAverage": 9.0,
+      "voteCount": 25000,
+      "directorId": 1,
+      "genres": [1, 2],
+      "actors": [1, 2, 3]
+    }
+  ],
+  "directors": [
+    {
+      "id": 1,
+      "name": "Christopher Nolan"
+    }
+  ],
+  "genres": [
+    {
+      "id": 1,
+      "name": "Sci-Fi"
+    },
+    {
+      "id": 2,
+      "name": "Thriller"
+    }
+  ],
+  "actors": [
+    {
+      "id": 1,
+      "name": "Leonardo DiCaprio"
+    },
+    {
+      "id": 2,
+      "name": "Joseph Gordon-Levitt"
     },
     {
       "id": 3,
-      "filmName": "Софучка супер клас",
-      "director": {
-        "id": 1,
-        "name": "Christopher Nolan"
-      },
-      "description": "A gripping superhero film",
-      "trailer": "https://example.com/trailer/darkknight",
-      "duration": 152,
-      "ageRating": 13,
-      "releaseDate": "2008-07-18",
-      "posterPath": "/img/Sofia-image.jpg",
-      "backgroundImagePath": "/images/darkknight/background.jpg",
-      "voteAverage": 9.0,
-      "voteCount": 250000,
-      "rentalPeriod": {
-        "startDate": "2025-02-04",
-        "endDate": "2025-02-11"
-      },
-      "actors": [
-        {
-          "id": 1,
-          "name": "Christian Bale"
-        },
-        {
-          "id": 2,
-          "name": "Heath Ledger"
-        }
-      ],
-      "genres": [
-        {
-          "id": 1,
-          "name": "Action"
-        },
-        {
-          "id": 2,
-          "name": "Crime"
-        }
-      ],
-      "sessions": [
-        {
-          "id": 1,
-          "startTime": "2025-02-10T16:00:00",
-          "endTime": "2025-02-10T18:30:00",
-          "price": 15.99,
-          "hall": "IMAX",
-          "salesStatistics": {
-            "id": 1,
-            "ticketsSold": 150,
-            "totalIncome": 2398
-          },
-          "bookings": [
-            {
-              "id": 1,
-              "user": {
-                "id": 1,
-                "username": "john_doe",
-                "email": "john.doe@example.com"
-              },
-              "bookingDate": "2025-02-09",
-              "numberOfTickets": 2,
-              "totalPrice": 31.98,
-              "chairNumber": "B1, B2"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "startTime": "2025-02-10T19:00:00",
-          "endTime": "2025-02-10T21:30:00",
-          "price": 16.99,
-          "hall": "Main Hall",
-          "salesStatistics": {
-            "id": 2,
-            "ticketsSold": 120,
-            "totalIncome": 2038
-          },
-          "bookings": [
-            {
-              "id": 2,
-              "user": {
-                "id": 2,
-                "username": "jane_doe",
-                "email": "jane.doe@example.com"
-              },
-              "bookingDate": "2025-02-09",
-              "numberOfTickets": 3,
-              "totalPrice": 50.97,
-              "chairNumber": "D1, D2, D3"
-            }
-          ]
-        }
-      ]
+      "name": "Elliot Page"
+    }
+  ],
+  "halls": [
+    {
+      "id": 1,
+      "name": "IMAX Hall",
+      "rows": 10,
+      "columns": 15
+    },
+    {
+      "id": 2,
+      "name": "Main Hall",
+      "rows": 20,
+      "columns": 25
+    }
+  ],
+  "sessions": [
+    {
+      "id": 1,
+      "movieId": 1,
+      "hallId": 1,
+      "startTime": "2025-02-09T22:00:00",
+      "endTime": "2025-02-09T23:30:00",
+      "price": 12.5
+    },
+    {
+      "id": 2,
+      "movieId": 2,
+      "hallId": 2,
+      "startTime": "2025-02-09T18:00:00",
+      "endTime": "2025-02-09T20:00:00",
+      "price": 15.0
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "roleId": 1
+    }
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "name": "Admin"
+    },
+    {
+      "id": 2,
+      "name": "User"
+    }
+  ],
+  "bookings": [
+    {
+      "id": 1,
+      "sessionId": 1,
+      "userId": 1,
+      "seatId": 5,
+      "price": 12.5,
+      "bookingDate": "2025-02-05T14:30:00"
+    }
+  ],
+  "seats": [
+    {
+      "id": 1,
+      "row": 1,
+      "column": 1,
+      "hallId": 1
+    },
+    {
+      "id": 2,
+      "row": 1,
+      "column": 2,
+      "hallId": 1
+    },
+    {
+      "id": 3,
+      "row": 1,
+      "column": 3,
+      "hallId": 1
+    },
+    {
+      "id": 4,
+      "row": 2,
+      "column": 1,
+      "hallId": 1
+    },
+    {
+      "id": 5,
+      "row": 2,
+      "column": 2,
+      "hallId": 1
+    },
+    {
+      "id": 6,
+      "row": 2,
+      "column": 3,
+      "hallId": 1
+    },
+    {
+      "id": 7,
+      "row": 3,
+      "column": 1,
+      "hallId": 1
+    },
+    {
+      "id": 8,
+      "row": 3,
+      "column": 2,
+      "hallId": 1
+    },
+    {
+      "id": 9,
+      "row": 3,
+      "column": 3,
+      "hallId": 1
+    },
+    {
+      "id": 10,
+      "row": 4,
+      "column": 1,
+      "hallId": 2
+    },
+    {
+      "id": 11,
+      "row": 4,
+      "column": 2,
+      "hallId": 2
+    },
+    {
+      "id": 12,
+      "row": 4,
+      "column": 3,
+      "hallId": 2
+    },
+    {
+      "id": 13,
+      "row": 5,
+      "column": 1,
+      "hallId": 2
+    },
+    {
+      "id": 14,
+      "row": 5,
+      "column": 2,
+      "hallId": 2
+    },
+    {
+      "id": 15,
+      "row": 5,
+      "column": 3,
+      "hallId": 2
+    },
+    {
+      "id": 16,
+      "row": 6,
+      "column": 1,
+      "hallId": 2
+    },
+    {
+      "id": 17,
+      "row": 6,
+      "column": 2,
+      "hallId": 2
+    },
+    {
+      "id": 18,
+      "row": 6,
+      "column": 3,
+      "hallId": 2
+    },
+    {
+      "id": 19,
+      "row": 7,
+      "column": 1,
+      "hallId": 2
+    },
+    {
+      "id": 20,
+      "row": 7,
+      "column": 2,
+      "hallId": 2
+    },
+    {
+      "id": 21,
+      "row": 7,
+      "column": 3,
+      "hallId": 2
+    },
+    {
+      "id": 22,
+      "row": 8,
+      "column": 1,
+      "hallId": 2
+    },
+    {
+      "id": 23,
+      "row": 8,
+      "column": 2,
+      "hallId": 2
+    },
+    {
+      "id": 24,
+      "row": 8,
+      "column": 3,
+      "hallId": 2
+    },
+    {
+      "id": 25,
+      "row": 8,
+      "column": 4,
+      "hallId": 2
+    },
+    {
+      "id": 26,
+      "row": 8,
+      "column": 5,
+      "hallId": 2
+    },
+    {
+      "id": 27,
+      "row": 9,
+      "column": 1,
+      "hallId": 2
+    },
+    {
+      "id": 28,
+      "row": 9,
+      "column": 2,
+      "hallId": 2
+    },
+    {
+      "id": 29,
+      "row": 9,
+      "column": 3,
+      "hallId": 2
+    },
+    {
+      "id": 30,
+      "row": 9,
+      "column": 4,
+      "hallId": 2
+    },
+    {
+      "id": 31,
+      "row": 9,
+      "column": 5,
+      "hallId": 2
     }
   ]
 }

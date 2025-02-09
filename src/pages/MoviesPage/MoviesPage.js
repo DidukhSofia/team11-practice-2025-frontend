@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MovieList from "../../components/MovieList/MovieList";
 import "./MoviesPage.css";
-import Arrow from "../../images/back-arrow.png";
 
 const MoviesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +22,7 @@ const MoviesPage = () => {
   );
 
   return (
-    <div>
+    <div className="movies__page">
       <header className="header">
         <div className="search-container">
           <input

@@ -23,11 +23,35 @@ const MovieDetails = () => {
       .then((response) => response.json())
       .then((data) => {
         const foundMovie = data.movies.find((m) => m.id.toString() === movieId);
-        setMovie(foundMovie);
+        if (!foundMovie) {
+          setMovie(null);
+          return;
+        }
+  
+        // Отримуємо жанри за ID
+        const movieGenres = foundMovie.genres.map((genreId) => 
+          data.genres.find((g) => g.id === genreId)?.name || "Невідомий жанр"
+        );
+  
+        // Отримуємо акторів за ID
+        const movieActors = foundMovie.actors.map((actorId) => 
+          data.actors.find((a) => a.id === actorId)?.name || "Невідомий актор"
+        );
+  
+        const movieDirector = data.directors.find((d) => d.id === foundMovie.directorId)?.name || "Невідомий режисер";
+        const movieSessions = data.sessions.filter((session) => session.movieId === foundMovie.id);
+  
+        setMovie({
+          ...foundMovie,
+          genres: movieGenres,
+          actors: movieActors,
+          director: movieDirector,
+          sessions: movieSessions, // Додаємо список сеансів
+        });
       })
       .catch((error) => console.error("Error fetching movie data:", error));
   }, [movieId]);
-
+  
   if (!movie) return <div>Фільм не знайдено</div>;
 
   return (
@@ -44,9 +68,9 @@ const MovieDetails = () => {
                 <FaStar key={index} style={{ color: "red", fontSize: "18px" }} />
               ))}
             </div>
-            <p className="main__genres">
+             <p className="main__genres">
               <strong>Жанр: </strong>
-              {movie.genres.map((genre) => genre.name).join(", ")}
+              {movie.genres.join(", ")}
             </p>
             <p className="main__duration">
               <strong>Тривалість: </strong>
@@ -57,13 +81,13 @@ const MovieDetails = () => {
               {new Date(movie.releaseDate).toLocaleDateString("uk-UA")}
             </p>
             <p className="main__actors">
-              <strong>У головних ролях:</strong>
-              {movie.actors.map((actor) => actor.name).join(", ")}
+              <strong className="main__actors-text">У головних ролях:</strong>
+              {movie.actors.join(", ")}
             </p>
             <p className="main__description">{movie.description}</p>
             <p className="main__director">
               <strong>Режисер: </strong>
-              {movie.director.name}
+              {movie.director}
             </p>
             <div className="main__button">
               <a href={movie.trailer} className="main__button main__button-right">
@@ -95,20 +119,20 @@ const MovieDetails = () => {
               </select>
             </div>
             <div className="schedule__sessions">
-              {movie.sessions
-                .filter((session) => session.startTime.split("T")[0] === selectedDate)
-                .map((session) => (
-                  <div key={session.id} className="session">
-                    <Link to={`/widget/${session.id}/seatplan`}
+              {movie.sessions &&
+                movie.sessions
+                  .filter((session) => session.startTime.split("T")[0] === selectedDate)
+                  .map((session) => (
+                    <div key={session.id} className="session">
+                    <Link
+                      to={`/session/${session.id}/hall/${session.hallId}`} // Динамічний шлях
                       className="session__time-link"
-
-                      onClick={(event) => {
-                        event.stopPropagation();
-                      }}>
+                      onClick={(event) => event.stopPropagation()}
+                    >
                       {format(parseISO(session.startTime), "HH:mm")}
                     </Link>
-                  </div>
-                ))}
+                    </div>
+                  ))}
             </div>
           </div>
         </section>

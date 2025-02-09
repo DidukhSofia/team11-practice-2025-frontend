@@ -3,32 +3,36 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import "@splidejs/splide/dist/css/splide-core.min.css";
 import "./Filter.css";
-import getmovie from "../../Get_All.json";
 import Card from "../Card/Card";
 
 const Filter = () => {
   const [slides, setSlides] = useState([]);
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [sessions, setSessions] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
   useEffect(() => {
-    setMovies(getmovie.movies);
-    setFilteredMovies(getmovie.movies);
+    fetch("/Get_All.json")
+      .then(response => response.json())
+      .then(data => {
+        setMovies(data.movies);
+        setSessions(data.sessions);
+      })
+      .catch(error => console.error('Error fetching movie data:', error));
   }, []);
 
-  // Форматуємо дату для відображення
+  useEffect(() => {
+    const filteredByDate = movies.filter(movie =>
+      sessions.some(session => session.movieId === movie.id && session.startTime.startsWith(selectedDate))
+    );
+    setFilteredMovies(filteredByDate);
+  }, [selectedDate, movies, sessions]);
+
   const formatDate = (date) => date.toISOString().split("T")[0];
+  const formatDisplayDate = (date) => date.toLocaleDateString("en-EN", { day: "numeric", month: "short" });
+  const formatDay = (date) => date.toLocaleDateString("en-EN", { weekday: "short" });
 
-  const formatDisplayDate = (date) => {
-    return date.toLocaleDateString("en-EN", { day: "numeric", month: "short" });
-  };
-
-  const formatDay = (date) => {
-    return date.toLocaleDateString("en-EN", { weekday: "short" });
-  };
-
-  // Генеруємо дати для слайдера
   useEffect(() => {
     const generateSlides = (daysCount) => {
       const today = new Date();
@@ -48,25 +52,11 @@ const Filter = () => {
     generateSlides(14);
   }, []);
 
-  // Фільтрація за обраною датою
-  useEffect(() => {
-    if (!selectedDate) {
-      setFilteredMovies(movies);
-      return;
-    }
-
-    const filteredByDate = movies.filter((movie) =>
-      movie.sessions?.some((session) => session.startTime.startsWith(selectedDate))
-    );
-
-    setFilteredMovies(filteredByDate);
-  }, [selectedDate, movies]);
-
   return (
     <div className="filter">
       <Splide
         options={{
-          type: "loop",
+          type: "slide",
           perPage: 7,
           perMove: 1,
           arrows: true,
@@ -94,8 +84,7 @@ const Filter = () => {
         ))}
       </Splide>
 
-      {/* Передаємо фільтрацію у Filters */}
-      <Filters movies={movies} setFilteredMovies={setFilteredMovies} selectedDate={selectedDate} />
+      <Filters movies={movies} setFilteredMovies={setFilteredMovies} selectedDate={selectedDate} sessions={sessions} />
 
       <div className="movies-list">
         {filteredMovies.map((movie, index) => (
@@ -106,138 +95,116 @@ const Filter = () => {
   );
 };
 
-function Filters({ movies, setFilteredMovies, selectedDate }) {
-    const [filters, setFilters] = useState({
-        searchQuery: '',
-        selectedGenre: '',
-        selectedTime: '',
-        selectedActor: ''
+function Filters({ movies, setFilteredMovies, selectedDate, sessions }) {
+  const [filters, setFilters] = useState({
+    searchQuery: '',
+    selectedGenre: '',
+    selectedTime: '',
+    selectedActor: ''
+  });
+  
+  const [genres, setGenres] = useState([]);
+  const [actors, setActors] = useState([]);
+
+  // Fetch genres and actors using useEffect
+  useEffect(() => {
+    // Assuming you have an API endpoint or data available as a constant
+    fetch("/Get_All.json") // Modify this to your actual API or data file
+      .then((response) => response.json())
+      .then((data) => {
+        setGenres(data.genres); // Set genres
+        setActors(data.actors); // Set actors
+      })
+      .catch((error) => {
+        console.error("Error fetching genres and actors:", error);
+      });
+  }, []);
+
+  const handleFilterChange = (filterKey, value) => {
+    setFilters((prevFilters) => {
+      const updatedFilters = { ...prevFilters, [filterKey]: value };
+      applyFilters(updatedFilters);
+      return updatedFilters;
     });
+  };
 
-    // Фільтрація даних
-    const handleFilterChange = (filterKey, value) => {
-        setFilters(prevFilters => {
-            const updatedFilters = { ...prevFilters, [filterKey]: value };
-            applyFilters(updatedFilters);
-            return updatedFilters;
-        });
-    };
-
-    const applyFilters = (filters) => {
-        let filteredMovies = movies;
-
-        if (filters.searchQuery) {
-            filteredMovies = filteredMovies.filter(movie =>
-                movie.filmName?.toLowerCase().includes(filters.searchQuery.toLowerCase())
-            );
-        }
-
-        if (filters.selectedGenre) {
-            filteredMovies = filteredMovies.filter(movie =>
-                movie.genres?.some(genre => genre.name === filters.selectedGenre)
-            );
-        }
-
-        if (filters.selectedTime) {
-            filteredMovies = filteredMovies.filter(movie =>
-                movie.sessions?.some(session => session?.startTime?.split('T')[1] === filters.selectedTime)
-            );
-        }
-
-        if (filters.selectedActor) {
-            filteredMovies = filteredMovies.filter(movie =>
-                movie.actors?.some(actor => actor.name === filters.selectedActor)
-            );
-        }
-
-        setFilteredMovies(filteredMovies);
-    };
-
-    // Функція для отримання унікальних значень для жанрів, акторів та часу
-    const getUniqueValues = (array, key) => {
-        const values = [];
-        array.forEach(item => {
-            if (item[key]) {
-                item[key].forEach(value => {
-                    if (!values.includes(value.name)) {
-                        values.push(value.name);
-                    }
-                });
-            }
-        });
-        return values;
-    };
-
-    // Отримуємо унікальні часи тільки для обраної дати
-    const getAvailableTimesForDate = () => {
-        if (!selectedDate) return [];
-
-        const times = new Set();
-
-        movies.forEach(movie => {
-            movie.sessions?.forEach(session => {
-                if (session.startTime.startsWith(selectedDate)) {
-                    const sessionTime = session.startTime.split('T')[1];
-                    times.add(sessionTime);
-                }
-            });
-        });
-
-        return Array.from(times);
-    };
-
-    return (
-        <div className="filters">
-            <div className="filter__search">
-                <input
-                    type="text"
-                    id="search"
-                    placeholder="Знайти"
-                    value={filters.searchQuery}
-                    onChange={e => handleFilterChange('searchQuery', e.target.value)}
-                />
-            </div>
-            <div className="filter__container">
-                <select
-                    id="genre-filter"
-                    value={filters.selectedGenre}
-                    onChange={e => handleFilterChange('selectedGenre', e.target.value)}
-                >
-                    <option value="">Жанр</option>
-                    {getUniqueValues(movies, 'genres').map((genre, index) => (
-                        <option key={index} value={genre}>
-                            {genre}
-                        </option>
-                    ))}
-                </select>
-
-                <select
-                    id="time-filter"
-                    value={filters.selectedTime}
-                    onChange={e => handleFilterChange('selectedTime', e.target.value)}
-                >
-                    <option value="">Час</option>
-                    {getAvailableTimesForDate().map((time, index) => (
-                        <option key={index} value={time}>
-                            {time}
-                        </option>
-                    ))}
-                </select>
-
-                <select
-                    id="actor-filter"
-                    value={filters.selectedActor}
-                    onChange={e => handleFilterChange('selectedActor', e.target.value)}
-                >
-                    <option value="">Актор</option>
-                    {getUniqueValues(movies, 'actors').map((actor, index) => (
-                        <option key={index} value={actor}>
-                            {actor}
-                        </option>
-                    ))}
-                </select>
-            </div>
-        </div>
+  const applyFilters = (filters) => {
+    let filteredMovies = movies.filter(movie =>
+      sessions.some(session => session.movieId === movie.id && session.startTime.startsWith(selectedDate))
     );
+
+    if (filters.searchQuery) {
+      filteredMovies = filteredMovies.filter(movie =>
+        movie.filmName?.toLowerCase().includes(filters.searchQuery.toLowerCase())
+      );
+    }
+
+    if (filters.selectedGenre) {
+      filteredMovies = filteredMovies.filter(movie =>
+        movie.genres?.some(genre => genre.name === filters.selectedGenre)
+      );
+    }
+
+    if (filters.selectedTime) {
+      filteredMovies = filteredMovies.filter(movie =>
+        sessions.some(session => session.movieId === movie.id && session.startTime.split('T')[1] === filters.selectedTime)
+      );
+    }
+
+    if (filters.selectedActor) {
+      filteredMovies = filteredMovies.filter(movie =>
+        movie.actors?.some(actor => actor.name === filters.selectedActor)
+      );
+    }
+
+    setFilteredMovies(filteredMovies);
+  };
+  const getAvailableTimesForDate = () => {
+    return Array.from(new Set(
+      sessions.filter(session => session.startTime.startsWith(selectedDate))
+        .map(session => session.startTime.split('T')[1])
+    ));
+  };
+
+  return (
+    <div className="filters">
+      <div className="filter__search">
+        <input
+          type="text"
+          placeholder="Знайти"
+          value={filters.searchQuery}
+          onChange={(e) => handleFilterChange('searchQuery', e.target.value)}
+        />
+      </div>
+      <div className="filter__container">
+        <select onChange={(e) => handleFilterChange('selectedGenre', e.target.value)}>
+          <option value="">Жанр</option>
+          {genres.map((genre) => (
+            <option key={genre.id} value={genre.name}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+
+        <select id="actor-filter" onChange={(e) => handleFilterChange('selectedActor', e.target.value)}>
+          <option value="">Актор</option>
+          {actors.map((actor) => (
+            <option key={actor.id} value={actor.name}>
+              {actor.name}
+            </option>
+          ))}
+        </select>
+        <select onChange={(e) => handleFilterChange('selectedTime', e.target.value)}>
+          <option value="">Час</option>
+          {getAvailableTimesForDate().map((time, index) => (
+            <option key={index} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
 }
+
 export default Filter;

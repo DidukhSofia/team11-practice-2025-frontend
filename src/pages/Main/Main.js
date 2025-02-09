@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Main.css";
 import { Link } from "react-router-dom";
 import Background from "../../images/main-bg.png";
 import MainCard from "../../components/MainCard/MainCard";
-import getmovie from "../../Get_All.json"; // Імпортуємо дані з JSON
 
 function LuxCinema() {
   return (
@@ -20,11 +19,20 @@ function LuxCinema() {
 }
 
 const Main = () => {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    fetch("/Get_All.json") // Use the correct API path here
+      .then(response => response.json())
+      .then(data => setMovies(data.movies)) // Fetch movies and set them in state
+      .catch(error => console.error("Error fetching movies:", error));
+  }, []);
+
   return (
     <section className="Main">
       <LuxCinema />
       <div className="movies-container">
-        {Array.isArray(getmovie.movies) && getmovie.movies.map((movie) => (
+        {movies.map((movie) => (
           <MainCard key={movie.id} mainCard={movie} />
         ))}
       </div>

@@ -1,11 +1,10 @@
 import MovieDetails from "./pages/MovieDetails/MovieDetails";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
-
-
+import Widget from "./pages/Widget/Widget"
 import "./App.css";
 import Aside from "./components/Aside/Aside";
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Sessions from "./pages/Sessions/Sessions";
 import Main from "./pages/Main/Main";
 
@@ -20,6 +19,7 @@ const App = () => {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/sessions" element={<Sessions />} />
             <Route path="/movies/:movieId" element={<MovieDetails />} />
+            <Route path="/session/:sessionId/hall/:hallId" element={<Widget />} />
           </Routes>
     </Router>
   );
