@@ -1,0 +1,76 @@
+.widget-container{
+    padding: 50px 90px;
+    display: flex;
+    gap: 30px;
+}
+
+.widget-container-text{
+    line-height: 25px;
+    position: relative;
+    top: 0;
+}
+
+.widget__name{
+    font-size: 36px;
+    line-height: 60px;
+}
+
+.widget__format{
+    display: flex;
+    gap: 5px;
+}
+
+.format{
+    padding: 0px 15px;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+.widget-container__time{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 60px;
+}
+
+.widget__date{
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+
+
+}
+.widget-container__location{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 60px;
+}
+
+.widget__seatplan{
+    width: 800px;
+    position: relative;
+    left: 90px;
+}
+
+.widget-container__price{
+    justify-self: center;
+    margin-bottom: 30px;
+    width: 145px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.widget__red-block{
+    background-color: red;
+    padding: 20px 15px;
+    border-radius: 5px;
+}
+
+.widget__screen{
+    justify-self: center;
+    font-size: 20px;
+    font-weight: bold;
+}

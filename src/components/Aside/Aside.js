@@ -42,27 +42,13 @@ const Aside = () => {
         </li>
         <li className="aside__item">
           <Link
-            to="/recommendations"
+            to="/movies"
             className={`aside__link ${
-              location.pathname === "/recommendations" ? "active" : ""
+              location.pathname === "/movies" ? "active" : ""
             }`}
           >
             <FontAwesomeIcon icon={faHeart} className="aside__link-icon" />
-            <span className="aside__link-text">Рекомендації</span>
-          </Link>
-        </li>
-        <li className="aside__item">
-          <Link
-            to="/booking"
-            className={`aside__link ${
-              location.pathname === "/booking" ? "active" : ""
-            }`}
-          >
-            <FontAwesomeIcon
-              icon={faSquareCheck}
-              className="aside__link-icon"
-            />
-            <span className="aside__link-text">Забронювати квиток</span>
+            <span className="aside__link-text">Усі фільми</span>
           </Link>
         </li>
       </ul>

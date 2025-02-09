@@ -13,25 +13,22 @@
     
 }
 
-.filter__slide{
+.filter__slide {
     background-color: #FFFFFF;
     padding: 20px;
-    max-width:90px;
+    max-width: 90px;
     border-radius: 8px;
-    text-align: center; 
-
+    text-align: center;
 }
-
-
-.filter__slide:hover{
-    background-color: #FF0000;
-        
+  
+.filter__slide:hover {
+    background-color: red; 
 }
-
+  
 .filter__slide:hover .filter__slide-day {
     color: #FFFFFF;
-    
 }
+  
 
 .splide__arrow{
     color: #333333;
