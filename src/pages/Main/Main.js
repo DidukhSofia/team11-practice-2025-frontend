@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Main.css";
 import { Link } from "react-router-dom";
 import Background from "../../images/main-bg.png";
 import MainCard from "../../components/MainCard/MainCard";
-import getmovie from "../../Get_All.json"; // Імпортуємо дані з JSON
 
 function LuxCinema() {
   return (
@@ -20,11 +19,26 @@ function LuxCinema() {
 }
 
 const Main = () => {
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    fetch("http://localhost:5273/api/Movie", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(data => setMovies(data)) // Очікується, що бекенд поверне масив фільмів
+      .catch(error => console.error("Error fetching movies:", error));
+  }, []);
+
   return (
     <section className="Main">
       <LuxCinema />
       <div className="movies-container">
-        {Array.isArray(getmovie.movies) && getmovie.movies.map((movie) => (
+        {movies.map((movie) => (
           <MainCard key={movie.id} mainCard={movie} />
         ))}
       </div>

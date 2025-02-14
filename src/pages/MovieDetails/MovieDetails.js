@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import "./MovieDetails.css";
-import { format, parseISO, addDays } from "date-fns";
+import { format, parseISO, addDays, addHours } from "date-fns";
 import { uk } from "date-fns/locale";
 import { FaStar } from "react-icons/fa";
-
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -12,6 +11,10 @@ const MovieDetails = () => {
   const thirtyDaysFromNow = addDays(today, 14);
   const [selectedDate, setSelectedDate] = useState(format(today, "yyyy-MM-dd"));
   const [movie, setMovie] = useState(null);
+  const [genres, setGenres] = useState([]);
+  const [actors, setActors] = useState([]);
+  const [director, setDirector] = useState("");
+  const [sessions, setSessions] = useState([]);
   const availableDates = [];
 
   for (let d = today; d <= thirtyDaysFromNow; d = addDays(d, 1)) {
@@ -19,13 +22,48 @@ const MovieDetails = () => {
   }
 
   useEffect(() => {
-    fetch("/Get_All.json")
-      .then((response) => response.json())
+    const token = localStorage.getItem("authToken");
+    const headers = { "Content-Type": "application/json" };
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    fetch(`http://localhost:5273/api/Movie/${movieId}`, { headers })
+      .then((res) => res.json())
       .then((data) => {
-        const foundMovie = data.movies.find((m) => m.id.toString() === movieId);
-        setMovie(foundMovie);
+        setMovie(data);
+
+        Promise.all(
+          data.genres.map((genreId) =>
+            fetch(`http://localhost:5273/api/Genres/${genreId}`)
+              .then((res) => res.json())
+              .then((genre) => genre.name)
+          )
+        ).then(setGenres);
+
+        Promise.all(
+          data.actors.map((actorId) =>
+            fetch(`http://localhost:5273/api/Actors/${actorId}`)
+              .then((res) => res.json())
+              .then((actor) => actor.name)
+          )
+        ).then(setActors);
+
+        fetch(`http://localhost:5273/api/Directors/${data.directorId}`)
+          .then((res) => res.json())
+          .then((director) => setDirector(director.name));
       })
-      .catch((error) => console.error("Error fetching movie data:", error));
+      .catch((error) => console.error("Помилка завантаження фільму:", error));
+  }, [movieId]);
+
+  useEffect(() => {
+    fetch("http://localhost:5273/api/Sessions")
+      .then((res) => res.json())
+      .then((data) => {
+        const filteredSessions = data.filter((session) => session.movieId === Number(movieId));
+        setSessions(filteredSessions);
+      })
+      .catch((error) => console.error("Помилка завантаження сеансів:", error));
   }, [movieId]);
 
   if (!movie) return <div>Фільм не знайдено</div>;
@@ -38,15 +76,15 @@ const MovieDetails = () => {
             <h1 className="main__title">{movie.filmName}</h1>
             <p className="main__age-rating">{movie.ageRating}+</p>
             <div className="mainCard-rating">
-            {Array(Math.round(movie.voteAverage / 2))
-              .fill("")
-              .map((_, index) => (
-                <FaStar key={index} style={{ color: "red", fontSize: "18px" }} />
-              ))}
+              {Array(Math.round(movie.voteAverage / 2))
+                .fill("")
+                .map((_, index) => (
+                  <FaStar key={index} style={{ color: "red", fontSize: "18px" }} />
+                ))}
             </div>
             <p className="main__genres">
               <strong>Жанр: </strong>
-              {movie.genres.map((genre) => genre.name).join(", ")}
+              {genres.length > 0 ? genres.join(", ") : "Завантаження..."}
             </p>
             <p className="main__duration">
               <strong>Тривалість: </strong>
@@ -57,13 +95,13 @@ const MovieDetails = () => {
               {new Date(movie.releaseDate).toLocaleDateString("uk-UA")}
             </p>
             <p className="main__actors">
-              <strong>У головних ролях:</strong>
-              {movie.actors.map((actor) => actor.name).join(", ")}
+              <strong className="main__actors-text">У головних ролях:</strong>
+              {actors.length > 0 ? actors.join(", ") : "Завантаження..."}
             </p>
             <p className="main__description">{movie.description}</p>
             <p className="main__director">
               <strong>Режисер: </strong>
-              {movie.director.name}
+              {director ? director : "Завантаження..."}
             </p>
             <div className="main__button">
               <a href={movie.trailer} className="main__button main__button-right">
@@ -73,7 +111,7 @@ const MovieDetails = () => {
           </div>
           <div className="main__content-image">
             <div className="main__poster">
-              <img src={movie.posterPath} alt="Movie Poster"/>
+              <img src={movie.posterPath} alt="Movie Poster" />
             </div>
           </div>
         </section>
@@ -95,20 +133,25 @@ const MovieDetails = () => {
               </select>
             </div>
             <div className="schedule__sessions">
-              {movie.sessions
+              {sessions
                 .filter((session) => session.startTime.split("T")[0] === selectedDate)
-                .map((session) => (
-                  <div key={session.id} className="session">
-                    <Link to={`/widget/${session.id}/seatplan`}
-                      className="session__time-link"
+                .map((session) => {
+                  const sessionStartTime = parseISO(session.startTime);
+                  // Відкоригуємо час на UTC (0 часовий пояс)
+                  const adjustedStartTime = addHours(sessionStartTime, -2);  // Віднімемо 2 години (якщо потрібно)
 
-                      onClick={(event) => {
-                        event.stopPropagation();
-                      }}>
-                      {format(parseISO(session.startTime), "HH:mm")}
-                    </Link>
-                  </div>
-                ))}
+                  return (
+                    <div key={session.id} className="session">
+                      <Link
+                        to={`/session/${session.id}/hall/${session.hallId}`}
+                        className="session__time-link"
+                      >
+                        {/* Форматуємо відкоригований час */}
+                        {format(adjustedStartTime, "HH:mm")}
+                      </Link>
+                    </div>
+                  );
+                })}
             </div>
           </div>
         </section>

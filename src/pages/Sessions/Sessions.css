@@ -4,13 +4,8 @@
     padding: 2%;    
     align-items: center;
     width: 100%;
-}
-
-.head__authentication {
-position: relative;
-display: flex;
-gap: 20px;
-align-items: center;
+    text-align: center;
+    
 }
 
 .head-title {
@@ -22,32 +17,9 @@ line-height: 44px;
 align-items: center;
 }
 
-.authentication__user {
-background-color: #F9F9F97A;
-border-radius: 12px;
-padding: 20px 18px;
-min-width: 60px;
-}
-
-.authentication__select {
-color: #FFFFFF;
-padding: 0 20px 0 0;
-font-size: 18px;
-font-family: "Lexend", serif;
-font-weight: 800;
-line-height: 18px;
-border: none; 
-background-color: transparent; 
-cursor: pointer;
-}
-
-option {
-    background-color: lightgrey; 
-}
-
 
 .sessions {
-    padding: 10px 80px 100px 140px;
+    padding: 10px 80px 100px 150px;
     width: 100%;
     min-height: 100vh;
     display: flex;

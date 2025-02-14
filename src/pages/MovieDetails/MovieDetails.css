@@ -1,50 +1,20 @@
-.header {
-  align-items: center;
-  padding-top: 80px; 
-
-}
-
-.header__back {
+.main {
+  padding-left:80px;
   display: flex;
+  flex-direction:column;
+  width: 100%;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
-  position: relative;
-  margin-left: 100px;
-}
-
-.header__back span {
-    font-family: "Lato", sans-serif; 
-    font-weight: 800; /* ExtraBold */
-    font-size: 16px; 
-    color: #FFFFFF; 
-}
-
-.back__arrow-container {
-    background-color: #F9F9F97A; 
-    border-radius: 7px; 
-    padding: 12px; 
-    height: 7px;
-    width: 7px;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-}
-
-.back__arrow-container:hover {
-    background-color: #e50914; 
-}
-
-.back__arrow-image {
-    height: 11px;
-    width: 7px;
-    position: absolute;  
-    z-index: 1;    
+  background-image: url("../../images/background.png");
+  background-size: cover;
+  background-color: #000000;
+  min-height:100vh;
 }
 
 .main_context {
   width:100%;
   display: flex;
-  gap: 50px;
+  gap: 20px;
   justify-content: space-around;
 
 }
@@ -53,12 +23,12 @@
     order: 2; 
     padding-right: 35px;
     padding-top: 60px;
-    min-width: 500px;
+    min-width: 380px;
+    max-width: 450px;
 
 }
 .main__content-image {
     order: 1; 
-    padding-left: 130px;
     padding-top: 70px;
 }
 
@@ -88,10 +58,6 @@
     gap: 5px;
     align-items: center;    
 }
-.star {
-    color: gold; 
-    font-size: 20px;
-  }
 
   .main__genres{
     font-size: 20px;
@@ -142,6 +108,9 @@
 
   }
 
+  .main__actors-text{
+    white-space: nowrap;
+  }
 .main__description {
     font-size: 18px;
     margin-bottom: 15px;
@@ -169,17 +138,7 @@
   .main__director strong {
     font-weight: 700;
 }
-.main {
-  padding-left:100px;
-  display: flex;
-  flex-direction:column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  background-image: url("../../images/background.png");
-  background-size: cover;
-  background-color: #000000;
-}
+
 
 .main__poster {
   width: 300px;
@@ -219,9 +178,6 @@
 .main__schedule{
   margin: 30px auto; 
   background-color: #F9F9F97A;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 500px;
   height: 200px;
   padding: 0 30px;
@@ -272,7 +228,12 @@
   color: #ffffff;
 
 }
+@media (max-width: 1080px) {
+  .main_context {
+    justify-content: space-between;
 
+  }
+}
 @media (max-width: 780px) {
   .main_context {
     flex-direction: column; 
@@ -290,9 +251,11 @@
   }
 
   .main__content-image {
-    padding-left: 0;
+
+    padding-left: 0px;
     padding-top: 20px;
   }
+
 
   .main__title {
     font-size: 36px; 

@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./MainCard.css";
 import { FaStar } from "react-icons/fa";
-
 const MainCard = ({ mainCard }) => {
+  const [actors, setActors] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    fetch("http://localhost:5273/api/Actors", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(data => setActors(data)) 
+      .catch(error => console.error("Error fetching actors:", error));
+  }, []);
+
+  const actorNames = mainCard.actors
+    .map(id => {
+      const actor = actors.find(actor => actor.id === id);
+      return actor ? actor.name : null;
+    })
+    .filter(name => name !== null)
+    .join(", ");
+
   return (
     <div className="movie-mainCard">
       <div className="mainCard__content-box">
@@ -22,7 +44,7 @@ const MainCard = ({ mainCard }) => {
               ))}
           </div>
           <div className="mainCard__content-left">
-            <p className="mainCard-genres">{mainCard.genres.map((g) => g.name).join(", ")}</p>
+            <p className="mainCard-actors">{actorNames}</p>
             <Link to={`/movies/${mainCard.id}`} className="mainCard-info-button">
                 More info
             </Link>

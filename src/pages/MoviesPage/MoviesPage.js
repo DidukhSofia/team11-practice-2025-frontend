@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import MovieList from "../../components/MovieList/MovieList";
 import "./MoviesPage.css";
-import Arrow from "../../images/back-arrow.png";
 
 const MoviesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    fetch("/Get_All.json") // Завантажуємо дані з публічної папки
-      .then((response) => response.json())
-      .then((data) => setMovies(data.movies))
-      .catch((error) => console.error("Помилка завантаження фільмів:", error));
+useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    fetch("http://localhost:5273/api/Movie", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(data => setMovies(data)) // Очікується, що бекенд поверне масив фільмів
+      .catch(error => console.error("Error fetching movies:", error));
   }, []);
+
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
@@ -23,7 +29,7 @@ const MoviesPage = () => {
   );
 
   return (
-    <div>
+    <div className="movies__page">
       <header className="header">
         <div className="search-container">
           <input

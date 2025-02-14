@@ -1,7 +1,7 @@
 /* Admin Panel Styles */
 .admin-panel {
     
-    color: #000000; /* Dark background */  
+    background-color: #000000; /* Dark background */  
     padding:60px 20px 20px 100px;
   }
   .admin-panel__title{
@@ -19,14 +19,15 @@
     color: black;
     font-weight: 600;
     font-size: 14px;
-    height: 50px;
-    width: 135px;
+    height: 40px;
+    width: 100px;
     border-radius: 16px;
     align-items: center;
-    margin-top: 10px;
+    margin-right: 5px;   
+     margin-top: 10px;
 
 
-  }
+}
   .admin-panel__button-delete:hover ,
   .admin-panel__button-edit:hover ,
   .admin-panel__button-save:hover,
@@ -143,4 +144,33 @@
 .datetime-end-input:empty::before {
   content: "Кінець сеансу";
   color: rgb(0, 0, 0);
+}
+.input-group {
+  display: flex;
+  justify-content: space-between; /* Розміщує елементи праворуч і ліворуч */
+  align-items: center;
+  margin-bottom: 10px; /* Відступ між полями вводу */
+}
+
+.input-group input {
+  flex: 1; /* Розтягує поле вводу на всю ширину */
+  padding: 8px;
+  margin-right: 10px; /* Відступ між полем вводу і кнопкою */
+}
+
+.button-edit {
+ 
+  background-color: #e50914;
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  height: 40px;
+  width: 100px;
+  border-radius: 16px;
+  align-items: center;
+  margin-right: 5px;   
+}
+
+.button-edit:hover {
+  background-color: #ffffff;
 }
