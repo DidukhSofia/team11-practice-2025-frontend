@@ -89,25 +89,24 @@
   color: #ff0000;
   margin-bottom: 10px;
 }
-
-  
-input, textarea {
+.input-form
+   {
   border: 1px solid #f44336;
   padding: 15px;
   margin: 10px 0;
   border-radius: 10px;
   width: 100%;
   font-size: 10px;
-  color: #000000; /* Light gray placeholder */
+  color: #000000; 
 
 }
+.input-form::placeholder {
+  color: #000000;
+}
+.input-form::placeholder {
+  color: #000000; 
+}
 
-textarea::placeholder {
-  color: #000000; /* Light gray placeholder */
-}
-input::placeholder {
-  color: #000000; /* Light gray placeholder */
-}
 .admin-panel__movie-form {
   background-color: #cfcfcff1;
   padding: 20px;

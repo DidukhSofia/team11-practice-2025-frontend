@@ -20,12 +20,11 @@ export default function Logout() {
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLoginMode ? "/api/auth/login" : "/api/auth/register";
-    const apiUrl = `https://localhost:7230${endpoint}`;
-
+    const apiUrl = `https://localhost:7320${endpoint}`;
+  
     try {
       console.log("Sending request to:", apiUrl);
       const response = await fetch(apiUrl, {
@@ -36,19 +35,20 @@ export default function Logout() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       console.log("Response received:", response);
-      
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      
+  
       const data = await response.json();
       console.log("Response data:", data);
-      
+  
       if (isLoginMode) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data.role);
+        localStorage.setItem("email", formData.email); // Зберегти електронну пошту
         setIsAuthenticated(true);
         alert("Вхід успішний!");
         window.location.href = data.role === "admin" ? "/admin" : "/";
@@ -56,21 +56,21 @@ export default function Logout() {
         alert("Реєстрація успішна! Увійдіть у систему.");
         setIsLoginMode(true);
       }
-
+  
       setIsModalVisible(false);
     } catch (error) {
       console.error("Fetch error:", error);
       alert("Помилка авторизації. Перевірте підключення до сервера.");
     }
   };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("email"); // Видалити електронну пошту
     setIsAuthenticated(false);
     alert("Ви вийшли з системи!");
     window.location.href = "/";
   };
-
   return (
     <div className="auth-container">
       {!isAuthenticated ? (
@@ -82,6 +82,7 @@ export default function Logout() {
           Вийти
         </button>
       )}
+
 
       {isModalVisible && (
         <div className="auth-window">

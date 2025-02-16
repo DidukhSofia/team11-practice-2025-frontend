@@ -633,116 +633,123 @@ const handleDeleteSession = (sessionId) => {
       .catch((error) => console.error("Помилка при видаленні сеансу:", error));
       };}
   
-  return (
-    <div className="admin-panel">
-      <h1 className="admin-panel__title">Адмін-панель</h1>
+      return (
+        <div className="admin-panel">
+          <h1 className="admin-panel__title">Адмін-панель</h1>
+          
+          <button className="admin-panel__button-add" onClick={handleAddMovie}>
+            Додати новий фільм
+          </button>
+          
+          <button className="admin-panel__button-add" onClick={() => setShowSessions(!showSessions)}>
+            {showSessions ? "Сховати сеанси" : "Показати сеанси"}
+          </button>
       
-      <button className="admin-panel__button-add" onClick={handleAddMovie}>
-        Додати новий фільм
-      </button>
-      
-      <button className="admin-panel__button-add" onClick={() => setShowSessions(!showSessions)}>
-        {showSessions ? "Сховати сеанси" : "Показати сеанси"}
-      </button>
-  
-      {showSessions && (
-        <div className="admin-panel__sessions">
-          <h3>Список сеансів</h3>
-<div className="admin-panel__sessions-list">
-  {[...sessions]
-    .map((session) => {
-      const movie = movies.find((m) => m.id === session.movieId);
-      const hall = halls.find((h) => h.id === session.hallId);
-      return {
-        ...session,
-        movieName: movie ? movie.filmName : "Невідомо",
-        hallName: hall ? hall.name : "Невідомо",
-      };
-    })
-    .sort((a, b) => a.movieName.localeCompare(b.movieName)) // Сортування за назвою фільму
-    .map((session) => (
-      <div key={session.id} className="session-item">
-        <span><strong>Фільм:</strong> {session.movieName}</span>
-        <span><strong>Час:</strong> {session.startTime} - {session.endTime}</span>
-        <span><strong>Ціна:</strong> {session.price} грн</span>
-        <span><strong>Зала:</strong> {session.hallName}</span>
-        <button 
+          {showSessions && (
+            <div className="admin-panel__sessions">
+              <h3>Список сеансів</h3>
+    <div className="admin-panel__sessions-list">
+      {[...sessions]
+        .map((session) => {
+          const movie = movies.find((m) => m.id === session.movieId);
+          const hall = halls.find((h) => h.id === session.hallId);
+          return {
+            ...session,
+            movieName: movie ? movie.filmName : "Невідомо",
+            hallName: hall ? hall.name : "Невідомо",
+          };
+        })
+        .sort((a, b) => a.movieName.localeCompare(b.movieName)) // Сортування за назвою фільму
+        .map((session) => (
+          <div key={session.id} className="session-item">
+            <span><strong>Фільм:</strong> {session.movieName}</span>
+            <span><strong>Час:</strong> {session.startTime} - {session.endTime}</span>
+            <span><strong>Ціна:</strong> {session.price} грн</span>
+            <span><strong>Зала:</strong> {session.hallName}</span>
+            <div className="session-item__buttons">
+          <button 
             className="admin-panel__button-edit"
             onClick={() => handleEditSession(session)}
           >
             Редагувати
           </button>
-
+    
           <button 
-className="admin-panel__button-delete"
+            className="admin-panel__button-delete"
             onClick={() => handleDeleteSession(session.id)}
           >
             Видалити
-            </button>
+          </button>
+        </div>
+          </div>
+        ))}
+    </div>
+    <div className="admin-panel__movie-form">
+              {editingSession ? (
+                <div className="admin-panel__sessions-form">
+                  <h3>Редагувати сеанс</h3>
+    
+                  <select
+                    name="movieId"
+                    value={editingSession.movieId}
+                    onChange={(e) => handleInputChange(e, true, true)}
+                  >
+                    <option value="">Оберіть фільм</option>
+                    {movies.map((movie) => (
+                      <option key={movie.id} value={movie.id}>
+                        {movie.filmName}
+                      </option>
+                    ))}
+                  </select>
+    
+                  <select
+      name="hallId"
+      value={editingSession.hallId }
+      onChange={(e) => handleInputChange(e, true, true)}
+    >
+      <option value="">Оберіть залу</option>
+      {halls.map((hall) => (
+        <option key={hall.id} value={hall.id}>
+          {hall.name}
+        </option>
+      ))}
+    </select>
+    
+                  <input
+                    type="datetime-local"
+                    name="startTime"
+                    value={editingSession.startTime || ""}
+                    onChange={(e) => handleInputChange(e, true, true)}
+                    className="input-form" 
+    
+                  />
+    
+                  <input
+                    type="datetime-local"
+                    name="endTime"
+                    value={editingSession.endTime || ""}
+                    onChange={(e) => handleInputChange(e, true, true)}
+                    className="input-form" 
+    
+                  />
+    
+                  <input
+                    type="number"
+                    name="price"
+                    value={editingSession.price || ""}
+                    onChange={(e) => handleInputChange(e, true, true)}
+                    className="input-form" 
+    
+                  />
+    
+                  <button className="admin-panel__button-save"  onClick={handleSaveSessionEdit}>Зберегти зміни</button>
+                </div>
+              ) : (
+                <div className="admin-panel__sessions-form">
+                  <h3>Додати новий сеанс</h3>
 
-      </div>
-    ))}
-</div>
-<div className="admin-panel__movie-form">
-          {editingSession ? (
-            <div className="admin-panel__sessions-form">
-              <h3>Редагувати сеанс</h3>
 
-              <select
-                name="movieId"
-                value={editingSession.movieId}
-                onChange={(e) => handleInputChange(e, true, true)}
-              >
-                <option value="">Оберіть фільм</option>
-                {movies.map((movie) => (
-                  <option key={movie.id} value={movie.id}>
-                    {movie.filmName}
-                  </option>
-                ))}
-              </select>
-
-              <select
-  name="hallId"
-  value={editingSession.hallId }
-  onChange={(e) => handleInputChange(e, true, true)}
->
-  <option value="">Оберіть залу</option>
-  {halls.map((hall) => (
-    <option key={hall.id} value={hall.id}>
-      {hall.name}
-    </option>
-  ))}
-</select>
-
-              <input
-                type="datetime-local"
-                name="startTime"
-                value={editingSession.startTime || ""}
-                onChange={(e) => handleInputChange(e, true, true)}
-              />
-
-              <input
-                type="datetime-local"
-                name="endTime"
-                value={editingSession.endTime || ""}
-                onChange={(e) => handleInputChange(e, true, true)}
-              />
-
-              <input
-                type="number"
-                name="price"
-                value={editingSession.price || ""}
-                onChange={(e) => handleInputChange(e, true, true)}
-              />
-
-              <button className="admin-panel__button-save"  onClick={handleSaveSessionEdit}>Зберегти зміни</button>
-            </div>
-          ) : (
-            <div className="admin-panel__sessions-form">
-              <h3>Додати новий сеанс</h3>
-
-
-              <select
+                  <select
                 name="movieId"
                 value={newSession.movieId}
                 onChange={(e) => handleInputChange(e, false, true)}
@@ -773,6 +780,8 @@ className="admin-panel__button-delete"
                 name="startTime"
                 value={newSession.startTime || ""}
                 onChange={(e) => handleInputChange(e, false, true)}
+                className="input-form" 
+
               />
 
               <input
@@ -780,6 +789,8 @@ className="admin-panel__button-delete"
                 name="endTime"
                 value={newSession.endTime || ""}
                 onChange={(e) => handleInputChange(e, false, true)}
+                className="input-form" 
+
               />
 
               <input
@@ -788,6 +799,8 @@ className="admin-panel__button-delete"
                 placeholder="Ціна"
                 value={newSession.price || ""}
                 onChange={(e) => handleInputChange(e, false, true)}
+                className="input-form" 
+
               />
 
               <button className="admin-panel__button-add" onClick={handleAddSession}>
@@ -821,35 +834,39 @@ className="admin-panel__button-delete"
         <div className="admin-panel__movie-form">
           <h3>{editingMovie ? "Редагувати фільм" : "Додати новий фільм"}</h3>
   
-          <input type="text" name="filmName" placeholder="Назва" value={newMovie.filmName} onChange={handleInputChange} />
-          <input type="text" name="description" placeholder="Опис" value={newMovie.description} onChange={handleInputChange} />
-          <input type="text" name="trailer" placeholder="Трейлер" value={newMovie.trailer} onChange={handleInputChange} />
-          <input type="number" name="duration" placeholder="Тривалість" value={newMovie.duration} onChange={handleInputChange} />
+          <input type="text" name="filmName" placeholder="Назва" value={newMovie.filmName} onChange={handleInputChange} className="input-form"  />
+          <input type="text" name="description" placeholder="Опис" value={newMovie.description} onChange={handleInputChange}  className="input-form"/>
+          <input type="text" name="trailer" placeholder="Трейлер" value={newMovie.trailer} onChange={handleInputChange}  className="input-form"/>
+          <input type="number" name="duration" placeholder="Тривалість" value={newMovie.duration} onChange={handleInputChange}  className="input-form"/>
           
-          <input type="number" name="ageRating" placeholder="Віковий рейтинг" value={newMovie.ageRating} onChange={handleInputChange} />
+          <input type="number" name="ageRating" placeholder="Віковий рейтинг" value={newMovie.ageRating} onChange={handleInputChange}  className="input-form"/>
   
           <input 
             type="date" 
             name="releaseDate" 
             value={newMovie.releaseDate ? new Date(newMovie.releaseDate).toISOString().split('T')[0] : ''} 
             onChange={handleInputChange} 
+             className="input-form"
           />
   
-          <input type="text" name="posterPath" placeholder="Постер" value={newMovie.posterPath} onChange={handleInputChange} />
-          <input type="text" name="backgroundImagePath" placeholder="Фон" value={newMovie.backgroundImagePath} onChange={handleInputChange} />
-          <input type="number" name="voteAverage" placeholder="Рейтинг" value={newMovie.voteAverage} onChange={handleInputChange} />
-          <input type="number" name="voteCount" placeholder="Кількість голосів" value={newMovie.voteCount} onChange={handleInputChange} />
+          <input type="text" name="posterPath" placeholder="Постер" value={newMovie.posterPath} onChange={handleInputChange}  className="input-form" />
+          <input type="text" name="backgroundImagePath" placeholder="Фон" value={newMovie.backgroundImagePath} onChange={handleInputChange}  className="input-form"/>
+
+          <input type="number" name="voteAverage" placeholder="Рейтинг" value={newMovie.voteAverage} onChange={handleInputChange}  className="input-form"/>
+          <input type="number" name="voteCount" placeholder="Кількість голосів" value={newMovie.voteCount} onChange={handleInputChange}  className="input-form"/>
           <div className="input-group">
   <input
     type="text"
     name="genres"
     placeholder="Жанри (через кому)"
     value={newMovie.genres}
-
     onChange={handleInputChange}
+     className="input-form"
   />
-  <button className="button-edit" onClick={handleAddGenres}>Редагувати жанр</button>
-</div>
+          {editingMovie && ( 
+
+      <button className="button-edit" onClick={handleAddGenres}>Редагувати жанр</button>)}
+      </div>
 
 <div className="input-group">
   <input
@@ -858,8 +875,10 @@ className="admin-panel__button-delete"
     placeholder="Актори (через кому)"
     value={newMovie.actors}
     onChange={handleInputChange}
+     className="input-form"
   />
-  <button className="button-edit" onClick={handleAddActor}>Редагувати актора</button>
+        {editingMovie && ( 
+  <button className="button-edit" onClick={handleAddActor}>Редагувати актора</button>)}
 </div>
 
 <div className="input-group">
@@ -869,8 +888,11 @@ className="admin-panel__button-delete"
     placeholder="Режисер"
     value={newMovie.director}
     onChange={handleInputChange}
+     className="input-form"
   />
-  <button className="button-edit" onClick={handleAddDirector}>Редагувати режисера</button>
+          {editingMovie && ( 
+
+  <button className="button-edit" onClick={handleAddDirector}>Редагувати режисера</button>)}
 </div>
 
 
@@ -889,3 +911,4 @@ className="admin-panel__button-delete"
 };
 
 export default AdminPage;
+    
