@@ -71,7 +71,6 @@ const Card = ({ card, selectedDate }) => {
                 <div className="session-times">
                   {filteredSessions.map((session) => {
                     const sessionStartTime = parseISO(session.startTime);
-                    // Віднімаємо 2 години, щоб отримати час у UTC
                     const adjustedStartTime = addHours(sessionStartTime, -2);
 
                     return (
@@ -81,7 +80,6 @@ const Card = ({ card, selectedDate }) => {
                           className="session__time-link"
                           onClick={(event) => event.stopPropagation()}
                         >
-                          {/* Форматуємо відкоригований час */}
                           {format(adjustedStartTime, "HH:mm")}
                         </Link>
                       </div>

@@ -28,7 +28,7 @@ const Main = () => {
       },
     })
       .then(response => response.json())
-      .then(data => setMovies(data)) // Очікується, що бекенд поверне масив фільмів
+      .then(data => setMovies(data))
       .catch(error => console.error("Error fetching movies:", error));
   }, []);
 

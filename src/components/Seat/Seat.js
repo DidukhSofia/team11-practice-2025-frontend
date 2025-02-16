@@ -16,9 +16,9 @@ class Seat extends Component {
       selectedSeats: [],
       reservedSeats: [],
       availableSeats: [],
-      hall: { rows: 0, columns: 0, id: 0 }, // Initialize with default values
-      isPaid: false, // New state to track payment status
-      ticketsSent: false, // New state to track if tickets were sent
+      hall: { rows: 0, columns: 0, id: 0 },
+      isPaid: false,
+      ticketsSent: false, 
     };
 
     this.selectSeat = this.selectSeat.bind(this);
@@ -29,10 +29,8 @@ class Seat extends Component {
   componentDidMount() {
     const { sessionId, hallId } = this.props;
   
-    // Зберегти sessionId в стані
     this.setState({ sessionId });
   
-    // Fetch session data
     fetch(`https://localhost:7230/api/Sessions/${sessionId}`)
       .then(response => response.json())
       .then(session => {
@@ -40,15 +38,12 @@ class Seat extends Component {
           throw new Error('Invalid session data');
         }
   
-        // Fetch movie data based on session's movieId
         return fetch(`https://localhost:7230/api/Movie/${session.movieId}`)
           .then(response => response.json())
           .then(movie => {
-            // Fetch hall data based on hallId
             return fetch(`https://localhost:7230/api/Halls/${hallId}`)
               .then(response => response.json())
               .then(hall => {
-                // Fetch seat availability for the session
                 return fetch(`https://localhost:7230/api/Sessions/${sessionId}/seats`)
                   .then(response => response.json())
                   .then(seatData => {
@@ -58,9 +53,9 @@ class Seat extends Component {
                       sessionStartTime: session.startTime,
                       sessionEndTime: session.endTime,
                       sessionPrice: session.price,
-                      hall: hall, // Set hall dimensions
+                      hall: hall,
                       availableSeats: seatData.availableSeats,
-                      reservedSeats: seatData.reservedSeats, // Reserved seats for this session
+                      reservedSeats: seatData.reservedSeats, 
                     });
                   });
               });
@@ -90,6 +85,7 @@ class Seat extends Component {
     return new Date(date).toLocaleTimeString('en-GB', options);
   }
 
+ 
   handlePayment() {
     const { selectedSeats, sessionId } = this.state;
   
@@ -99,6 +95,7 @@ class Seat extends Component {
     }
   
     const accessToken = localStorage.getItem('token');
+    const userEmail = localStorage.getItem('email'); // Отримати електронну пошту
   
     // Перевірка наявності токена
     if (!accessToken) {
@@ -115,7 +112,7 @@ class Seat extends Component {
         return;
       }
   
-      return fetch('https://localhost:7230/api/Bookings', {
+      return fetch('https://localhost:7320/api/Bookings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,8 +136,8 @@ class Seat extends Component {
       .then(results => {
         console.log("Бронювання створено:", results);
   
-        // Сповіщення про успішне бронювання
-        alert('Місця успішно заброньовані! Ваші квитки відправлені на вашу електронну пошту:');
+        // Сповіщення про успішне бронювання з електронною поштою
+        alert(`Місця успішно заброньовані! Ваші квитки відправлені на вашу електронну пошту: ${userEmail}`);
   
         this.setState((prevState) => ({
           reservedSeats: [...prevState.reservedSeats, ...selectedSeats],
@@ -164,17 +161,16 @@ class Seat extends Component {
       });
   }
 
+
   selectSeat(seatId) {
     const { selectedSeats, reservedSeats, isPaid } = this.state;
   
-    // Перевірка, чи місце не заброньоване
     if (reservedSeats.includes(seatId)) return;
   
     const updatedSeats = selectedSeats.includes(seatId)
-      ? selectedSeats.filter(id => id !== seatId)  // Видаляємо, якщо вже вибрано
-      : [...selectedSeats, seatId]; // Додаємо, якщо ще не вибрано
+      ? selectedSeats.filter(id => id !== seatId) 
+      : [...selectedSeats, seatId];
   
-    // Якщо користувач вибрав нові місця після оплати, скидаємо статус оплати
     if (isPaid) {
       this.setState({ selectedSeats: updatedSeats, isPaid: false, ticketsSent: false });
     } else {
@@ -187,15 +183,13 @@ class Seat extends Component {
   }
 
   renderCart() {
-    const { selectedSeats, sessionPrice, isPaid, hall, ticketsSent } = this.state;
+    const { selectedSeats, sessionPrice, isPaid, hall } = this.state;
     const totalPrice = selectedSeats.length * sessionPrice;
-    const userEmail = localStorage.getItem("email"); // Отримуємо електронну пошту з localStorage
   
     return (
       <div className='widget__cart'>
         <div className='widget__cart-content'>
           
-          {/* Загальна кількість квитків і загальна сума */}
           <div className='widget__cart-summary'>
             <strong><h3>Квитки</h3></strong>
             <div className='widget__cart-summary__price'>
@@ -205,8 +199,8 @@ class Seat extends Component {
           </div>
   
           {selectedSeats.map((seatId) => {
-            const row = Math.floor((seatId - 1) / hall.columns) + 1; // Ряд
-            const seatNumber = ((seatId - 1) % hall.columns) + 1; // Номер місця в ряді
+            const row = Math.floor((seatId - 1) / hall.columns) + 1;
+            const seatNumber = ((seatId - 1) % hall.columns) + 1;
             return (
               <div key={seatId} className='widget__cart-ticket'>
                 <div className='widget__cart-ticket__info'>
@@ -216,7 +210,7 @@ class Seat extends Component {
                 </div>
                 <button
                   className="widget__cart-remove-button"
-                  onClick={() => this.removeSeat(seatId)} // Викликаємо функцію видалення
+                  onClick={() => this.removeSeat(seatId)} 
                 >
                   × 
               </button>
@@ -268,7 +262,6 @@ class Seat extends Component {
               style={{ cursor: isReserved ? 'not-allowed' : 'pointer', backgroundColor: isReserved ? '#ccc' : '' }}
               title={isReserved ? "Це місце зайняте" : `Ряд: ${row + 1}, Місце: ${col + 1}, Ціна: ${sessionPrice} грн`} // Змінюємо текст для заброньованих місць
             >
-              {/* Текст місця прибрано */}
             </div>
           );
         }
