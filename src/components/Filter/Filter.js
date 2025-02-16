@@ -13,13 +13,22 @@ const Filter = () => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split("T")[0]);
 
   useEffect(() => {
-    fetch("/Get_All.json")
-      .then(response => response.json())
-      .then(data => {
-        setMovies(data.movies);
-        setSessions(data.sessions);
-      })
-      .catch(error => console.error('Error fetching movie data:', error));
+    const fetchData = async () => {
+      try {
+        const moviesResponse = await fetch("https://localhost:7230/api/Movie");
+        const sessionsResponse = await fetch("https://localhost:7230/api/Sessions");
+        
+        const moviesData = await moviesResponse.json();
+        const sessionsData = await sessionsResponse.json();
+        
+        setMovies(moviesData);
+        setSessions(sessionsData);
+      } catch (error) {
+        console.error("Error fetching movie data:", error);
+      }
+    };
+    
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -106,18 +115,23 @@ function Filters({ movies, setFilteredMovies, selectedDate, sessions }) {
   const [genres, setGenres] = useState([]);
   const [actors, setActors] = useState([]);
 
-  // Fetch genres and actors using useEffect
   useEffect(() => {
-    // Assuming you have an API endpoint or data available as a constant
-    fetch("/Get_All.json") // Modify this to your actual API or data file
-      .then((response) => response.json())
-      .then((data) => {
-        setGenres(data.genres); // Set genres
-        setActors(data.actors); // Set actors
-      })
-      .catch((error) => {
+    const fetchGenresAndActors = async () => {
+      try {
+        const genresResponse = await fetch("https://localhost:7230/api/Genres");
+        const actorsResponse = await fetch("https://localhost:7230/api/Actors");
+        
+        const genresData = await genresResponse.json();
+        const actorsData = await actorsResponse.json();
+        
+        setGenres(genresData);
+        setActors(actorsData);
+      } catch (error) {
         console.error("Error fetching genres and actors:", error);
-      });
+      }
+    };
+    
+    fetchGenresAndActors();
   }, []);
 
   const handleFilterChange = (filterKey, value) => {
@@ -147,7 +161,7 @@ function Filters({ movies, setFilteredMovies, selectedDate, sessions }) {
 
     if (filters.selectedTime) {
       filteredMovies = filteredMovies.filter(movie =>
-        sessions.some(session => session.movieId === movie.id && session.startTime.split('T')[1] === filters.selectedTime)
+        sessions.some(session => session.movieId === movie.id && session.startTime.startsWith(selectedDate) && session.startTime.split('T')[1] === filters.selectedTime)
       );
     }
 
@@ -159,6 +173,7 @@ function Filters({ movies, setFilteredMovies, selectedDate, sessions }) {
 
     setFilteredMovies(filteredMovies);
   };
+
   const getAvailableTimesForDate = () => {
     return Array.from(new Set(
       sessions.filter(session => session.startTime.startsWith(selectedDate))

@@ -84,3 +84,12 @@
 .aside__link.active .aside__link-text {
     color: red;
 }
+
+.aside__logout{
+    position: absolute;
+    bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+}

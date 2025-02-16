@@ -2,26 +2,27 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./MainCard.css";
 import { FaStar } from "react-icons/fa";
-
 const MainCard = ({ mainCard }) => {
   const [actors, setActors] = useState([]);
-  
-  // Fetch actors from the API inside useEffect of MainCard
+
   useEffect(() => {
-    fetch("/Get_All.json") // Use the correct path for your API
+    fetch("https://localhost:7230/api/Actors", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(response => response.json())
-      .then(data => setActors(data.actors)) 
+      .then(data => setActors(data)) 
       .catch(error => console.error("Error fetching actors:", error));
   }, []);
 
-  // Get the actor names based on the IDs from mainCard.actors
   const actorNames = mainCard.actors
     .map(id => {
-      const actor = actors.find(actor => actor.id === id); // Find actor by ID
-      return actor ? actor.name : null;  // Return the name if found, otherwise null
+      const actor = actors.find(actor => actor.id === id);
+      return actor ? actor.name : null;
     })
-    .filter(name => name !== null)  // Filter out null values (actors not found)
-    .join(", ");  // Join names with commas
+    .filter(name => name !== null)
+    .join(", ");
 
   return (
     <div className="movie-mainCard">
@@ -41,7 +42,7 @@ const MainCard = ({ mainCard }) => {
               ))}
           </div>
           <div className="mainCard__content-left">
-            <p className="mainCard-actors">{actorNames}</p> {/* Display actor names */}
+            <p className="mainCard-actors">{actorNames}</p>
             <Link to={`/movies/${mainCard.id}`} className="mainCard-info-button">
                 More info
             </Link>

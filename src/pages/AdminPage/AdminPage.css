@@ -1,146 +1,176 @@
 /* Admin Panel Styles */
 .admin-panel {
     
-    color: #000000; /* Dark background */  
-    padding:60px 20px 20px 100px;
-  }
-  .admin-panel__title{
-    font-weight: 800; /* ExtraBold */
-    font-size: 32px; 
-    font-family: "Lato", sans-serif;
-    color: #ffffff;
-  }
-  .admin-panel__button-delete,
-  .admin-panel__button-edit,
-  .admin-panel__button-add,
-  .admin-panel__button-save
-  {
-    background-color: #e50914;
-    color: black;
-    font-weight: 600;
-    font-size: 14px;
-    height: 50px;
-    width: 135px;
-    border-radius: 16px;
-    align-items: center;
-    margin-top: 10px;
+  background-color: #000000; /* Dark background */  
+  padding:60px 20px 20px 100px;
+}
+.admin-panel__title{
+  font-weight: 800; /* ExtraBold */
+  font-size: 32px; 
+  font-family: "Lato", sans-serif;
+  color: #ffffff;
+}
+.admin-panel__button-delete,
+.admin-panel__button-edit,
+.admin-panel__button-add,
+.admin-panel__button-save
+{
+  background-color: #e50914;
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+  height: 40px;
+  width: 100px;
+  border-radius: 16px;
+  align-items: center;
+  margin-right: 5px;   
+   margin-top: 10px;
 
 
-  }
-  .admin-panel__button-delete:hover ,
-  .admin-panel__button-edit:hover ,
-  .admin-panel__button-save:hover,
+}
+.admin-panel__button-delete:hover ,
+.admin-panel__button-edit:hover ,
+.admin-panel__button-save:hover,
 
-  .admin-panel__button-add:hover {
-    background-color: #ffffff;
-  }
-
-  /* Movie List Styles */
-  .admin-panel__movie-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 20px 20px 20px 0px;
-  }
-    .admin-panel__movie-item {
-        background-color: #cfcfcff1;
-        align-items: center;
-    text-align: center;
-    padding: 20px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .admin-panel__movie-item span{
-
-    font-family: "Lato", sans-serif;
-    font-size: 30px;
+.admin-panel__button-add:hover {
+  background-color: #ffffff;
 }
 
-  .admin-panel__movie-item:hover {
-    transform: translateY(-5px); /* Slight hover effect */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Card shadow */
-  }
-  
-  .admin-panel__movie-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    margin-bottom: 15px;
-  }
-  
-  .admin-panel__movie-item h3 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #b32121;
-    margin-bottom: 10px;
-  }
-  .admin-panel__movie-form h3, h4 {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ff0000;
-    margin-bottom: 10px;
-  }
-  .admin-panel__sessions-form h4 {
-    font-size: 26px;
-    font-weight: bold;
-    color: #ff0000;
-    margin-bottom: 10px;
-  }
-
-    
-  /* input, textarea {
-    border: 1px solid #f44336;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    width: 100%;
-    font-size: 10px;
-    color: #000000;
-
-  }
-   */
-  /* textarea::placeholder {
-    color: #000000; 
+/* Movie List Styles */
+.admin-panel__movie-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px 20px 20px 0px;
 }
-  input::placeholder {
-    color: #000000; 
-  } */
-  .admin-panel__movie-form {
-    background-color: #cfcfcff1;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 700px;
-    margin: 20px auto;
-    transition: all 0.3s ease;
-  }
-  
+  .admin-panel__movie-item {
+      background-color: #cfcfcff1;
+      align-items: center;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.admin-panel__movie-item span{
 
-    
-  .session-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #c9c9c9;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+  font-family: "Lato", sans-serif;
+  font-size: 30px;
+}
+
+.admin-panel__movie-item:hover {
+  transform: translateY(-5px); /* Slight hover effect */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Card shadow */
+}
+
+.admin-panel__movie-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.admin-panel__movie-item h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #b32121;
+  margin-bottom: 10px;
+}
+.admin-panel__movie-form h3, h4 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff0000;
+  margin-bottom: 10px;
+}
+.admin-panel__sessions-form h4 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ff0000;
+  margin-bottom: 10px;
+}
+
   
-  .session-details {
-    display: flex;
-    flex-direction: column;
-  }
+input, textarea {
+  border: 1px solid #f44336;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 10px;
+  color: #000000; /* Light gray placeholder */
+
+}
+
+textarea::placeholder {
+  color: #000000; /* Light gray placeholder */
+}
+input::placeholder {
+  color: #000000; /* Light gray placeholder */
+}
+.admin-panel__movie-form {
+  background-color: #cfcfcff1;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  margin: 20px auto;
+  transition: all 0.3s ease;
+}
+
+
   
-  .datetime-start-input:empty::before {
-    content: "Початок сеансу";
-    color: rgb(0, 0, 0);
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #c9c9c9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.session-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.datetime-start-input:empty::before {
+  content: "Початок сеансу";
+  color: rgb(0, 0, 0);
 }
 .datetime-end-input:empty::before {
-  content: "Кінець сеансу";
-  color: rgb(0, 0, 0);
+content: "Кінець сеансу";
+color: rgb(0, 0, 0);
+}
+.input-group {
+display: flex;
+justify-content: space-between; /* Розміщує елементи праворуч і ліворуч */
+align-items: center;
+margin-bottom: 10px; /* Відступ між полями вводу */
+}
+
+.input-group input {
+flex: 1; /* Розтягує поле вводу на всю ширину */
+padding: 8px;
+margin-right: 10px; /* Відступ між полем вводу і кнопкою */
+}
+
+.button-edit {
+
+background-color: #e50914;
+color: black;
+font-weight: 600;
+font-size: 14px;
+height: 40px;
+width: 100px;
+border-radius: 16px;
+align-items: center;
+margin-right: 5px;   
+}
+
+.button-edit:hover {
+background-color: #ffffff;
 }

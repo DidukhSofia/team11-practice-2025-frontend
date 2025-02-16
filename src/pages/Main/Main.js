@@ -22,9 +22,13 @@ const Main = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetch("/Get_All.json") // Use the correct API path here
+    fetch("https://localhost:7230/api/Movie", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then(response => response.json())
-      .then(data => setMovies(data.movies)) // Fetch movies and set them in state
+      .then(data => setMovies(data)) // Очікується, що бекенд поверне масив фільмів
       .catch(error => console.error("Error fetching movies:", error));
   }, []);
 

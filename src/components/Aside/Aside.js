@@ -5,9 +5,12 @@ import {
   faClock,
   faHeart,
   faSquareCheck,
+  faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
+
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../images/aside-logo.png";
+import Logout from "../Logout/Logout";
 
 const Aside = () => {
   const location = useLocation();
@@ -50,6 +53,12 @@ const Aside = () => {
             <FontAwesomeIcon icon={faHeart} className="aside__link-icon" />
             <span className="aside__link-text">Усі фільми</span>
           </Link>
+        </li>
+        <li className = "aside__item aside__logout">
+          <FontAwesomeIcon icon={faRightToBracket} className="aside__link-icon"/>
+          <div className="aside__link-text">
+            <Logout/>
+          </div>
         </li>
       </ul>
     </div>
