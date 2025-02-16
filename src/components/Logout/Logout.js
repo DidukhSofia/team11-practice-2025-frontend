@@ -23,7 +23,7 @@ export default function Logout() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const endpoint = isLoginMode ? "/api/auth/login" : "/api/auth/register";
-    const apiUrl = `https://localhost:7320${endpoint}`;
+    const apiUrl = `https://localhost:7230${endpoint}`;
   
     try {
       console.log("Sending request to:", apiUrl);
