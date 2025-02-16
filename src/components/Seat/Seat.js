@@ -1,224 +1,341 @@
 import React, { Component } from 'react';
-import './Seat.css';
-import { BsCalendar2Date } from "react-icons/bs";
-import { CiAlarmOn } from "react-icons/ci";
-import { CiLocationOn } from "react-icons/ci";
-import Line from "../../images/line.svg"; // додайте шлях до лінії
+import { CiAlarmOn, CiLocationOn } from 'react-icons/ci';
+import { BsCalendar2Date } from 'react-icons/bs';
+import Line from "../../images/line.svg";
+import "./Seat.css";
 
 class Seat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieData: null,
-      selectedSeats: JSON.parse(localStorage.getItem('selectedSeats')) || [],
-      purchasedSeats: JSON.parse(localStorage.getItem('purchasedSeats')) || [],
+      movieName: 'Loading...',
+      posterPath: '/default-poster.jpg',
+      sessionStartTime: null,
+      sessionEndTime: null,
+      sessionPrice: null,
+      selectedSeats: [],
+      reservedSeats: [],
+      availableSeats: [],
+      hall: { rows: 0, columns: 0, id: 0 }, // Initialize with default values
+      isPaid: false, // New state to track payment status
+      ticketsSent: false, // New state to track if tickets were sent
     };
 
-    // Bind methods to ensure the correct context
     this.selectSeat = this.selectSeat.bind(this);
     this.handlePayment = this.handlePayment.bind(this);
-    this.resetSelection = this.resetSelection.bind(this);
     this.clearAllSeats = this.clearAllSeats.bind(this);
-    this.removeTicket= this.removeTicket.bind(this);
   }
 
   componentDidMount() {
     const { sessionId, hallId } = this.props;
-
-    fetch('/Get_All.json')
+  
+    // Зберегти sessionId в стані
+    this.setState({ sessionId });
+  
+    // Fetch session data
+    fetch(`https://localhost:7230/api/Sessions/${sessionId}`)
       .then(response => response.json())
-      .then(data => {
-        const session = data.sessions.find(s => s.id === parseInt(sessionId));
-        const movie = data.movies.find(m => m.id === session.movieId);
-        const hall = data.halls.find(h => h.id === parseInt(hallId));
-        const seats = data.seats.filter(s => s.hallId === hall.id);
-        const bookedSeats = data.bookings.filter(b => b.sessionId === session.id).map(b => b.seatId);
-
-        this.setState({
-          movieData: { movie, session, hall, seats },
-          purchasedSeats: [...new Set([...this.state.purchasedSeats, ...bookedSeats])],
-        });
+      .then(session => {
+        if (!session || !session.movieId) {
+          throw new Error('Invalid session data');
+        }
+  
+        // Fetch movie data based on session's movieId
+        return fetch(`https://localhost:7230/api/Movie/${session.movieId}`)
+          .then(response => response.json())
+          .then(movie => {
+            // Fetch hall data based on hallId
+            return fetch(`https://localhost:7230/api/Halls/${hallId}`)
+              .then(response => response.json())
+              .then(hall => {
+                // Fetch seat availability for the session
+                return fetch(`https://localhost:7230/api/Sessions/${sessionId}/seats`)
+                  .then(response => response.json())
+                  .then(seatData => {
+                    this.setState({
+                      movieName: movie.filmName || 'Film not found',
+                      posterPath: movie.posterPath || '/default-poster.jpg',
+                      sessionStartTime: session.startTime,
+                      sessionEndTime: session.endTime,
+                      sessionPrice: session.price,
+                      hall: hall, // Set hall dimensions
+                      availableSeats: seatData.availableSeats,
+                      reservedSeats: seatData.reservedSeats, // Reserved seats for this session
+                    });
+                  });
+              });
+          });
       })
-      .catch(error => console.error('Error loading the movie data:', error));
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        this.setState({
+          movieName: 'Data not available',
+          posterPath: '/default-poster.jpg',
+        });
+      });
+  }
+  removeSeat(seatId) {
+    this.setState((prevState) => ({
+      selectedSeats: prevState.selectedSeats.filter((id) => id !== seatId),
+    }));
   }
 
-  // Format time as "HH:MM"
-  formatTime(time) {
-    return new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  formatDate(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString(undefined, options);
   }
 
-  // Format date as "DD.MM.YYYY Day"
-  formatDate(startTime) {
-    const date = new Date(startTime);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const daysOfWeek = ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П’ятниця', 'Субота'];
-    const dayOfWeek = daysOfWeek[date.getDay()];
-
-    return `${day}.${month}.${year} ${dayOfWeek}`;
+  formatTime(date) {
+    const options = { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' };
+    return new Date(date).toLocaleTimeString('en-GB', options);
   }
 
-  // Select a seat
-  selectSeat(seatId) {
-    const { selectedSeats, purchasedSeats } = this.state;
-
-    if (purchasedSeats.includes(seatId)) return;
-
-    const updatedSeats = selectedSeats.includes(seatId)
-      ? selectedSeats.filter(id => id !== seatId)
-      : [...selectedSeats, seatId];
-
-    this.setState({ selectedSeats: updatedSeats }, () => {
-      localStorage.setItem('selectedSeats', JSON.stringify(updatedSeats));
-    });
-  }
-
-  // Handle payment action
   handlePayment() {
-    const { selectedSeats, purchasedSeats } = this.state;
-    if (selectedSeats.length === 0) return;
-
-    const newPurchasedSeats = [...new Set([...purchasedSeats, ...selectedSeats])];
-    
-    this.setState({
-      purchasedSeats: newPurchasedSeats,
-      selectedSeats: [],
-    }, () => {
-      localStorage.setItem('purchasedSeats', JSON.stringify(newPurchasedSeats));
-      localStorage.removeItem('selectedSeats');
+    const { selectedSeats, sessionId } = this.state;
+  
+    if (selectedSeats.length === 0) {
+      console.log("Місця не вибрані.");
+      return;
+    }
+  
+    const accessToken = localStorage.getItem('token');
+  
+    // Перевірка наявності токена
+    if (!accessToken) {
+      console.error('Токен доступу відсутній. Будь ласка, увійдіть знову.');
+      alert('Ви не авторизовані. Будь ласка, увійдіть, щоб забронювати місця.');
+      return;
+    }
+  
+    // Массив промісів для всіх бронювань
+    const bookingPromises = selectedSeats.map(seatId => {
+      if (!sessionId || !seatId) {
+        console.error("Некоректні дані для бронювання!", { sessionId, seatId });
+        alert("Помилка: некоректні дані для бронювання.");
+        return;
+      }
+  
+      return fetch('https://localhost:7230/api/Bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          sessionId: sessionId,
+          seatId: seatId,
+        }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Помилка HTTP! Статус: ${response.status}`);
+        }
+        return response.json();
+      });
     });
+  
+    // Очікуємо всі запити до того, як оновимо стани
+    Promise.all(bookingPromises)
+      .then(results => {
+        console.log("Бронювання створено:", results);
+  
+        // Сповіщення про успішне бронювання
+        alert('Місця успішно заброньовані! Ваші квитки відправлені на вашу електронну пошту:');
+  
+        this.setState((prevState) => ({
+          reservedSeats: [...prevState.reservedSeats, ...selectedSeats],
+          availableSeats: prevState.availableSeats.filter(seat => !selectedSeats.includes(seat)),
+          selectedSeats: [], // Очищення вибраних місць
+          isPaid: true, // Оновлення статусу оплати
+          ticketsSent: true, // Встановлюємо, що квитки відправлені
+        }));
+      })
+      .catch(error => {
+        console.error('Помилка при створенні бронювання:', error);
+  
+        // Додатково перевіряємо статус відповіді
+        if (error.response && error.response.status === 401) {
+          alert('Сесія закінчилася. Будь ласка, увійдіть знову.');
+          localStorage.removeItem('accessToken'); // Очистити прострочений токен
+          window.location.reload(); // Оновити сторінку, щоб користувач авторизувався
+        } else {
+          alert('Не вдалося створити бронювання. Будь ласка, спробуйте ще раз.');
+        }
+      });
   }
 
-  // Reset seat selection
-  resetSelection() {
-    this.setState({ selectedSeats: [] }, () => {
-      localStorage.removeItem('selectedSeats');
-    });
+  selectSeat(seatId) {
+    const { selectedSeats, reservedSeats, isPaid } = this.state;
+  
+    // Перевірка, чи місце не заброньоване
+    if (reservedSeats.includes(seatId)) return;
+  
+    const updatedSeats = selectedSeats.includes(seatId)
+      ? selectedSeats.filter(id => id !== seatId)  // Видаляємо, якщо вже вибрано
+      : [...selectedSeats, seatId]; // Додаємо, якщо ще не вибрано
+  
+    // Якщо користувач вибрав нові місця після оплати, скидаємо статус оплати
+    if (isPaid) {
+      this.setState({ selectedSeats: updatedSeats, isPaid: false, ticketsSent: false });
+    } else {
+      this.setState({ selectedSeats: updatedSeats });
+    }
   }
 
-  // Clear all purchased seats
   clearAllSeats() {
-    this.setState({ purchasedSeats: [] }, () => {
-      localStorage.removeItem('purchasedSeats');
-    });
+    this.setState({ selectedSeats: [] });
   }
 
-  removeTicket(seatId) {
-    const {purchasedSeats} = this.state;
-    const updatedPurchasedSeats = purchasedSeats.filter(id => id !== seatId);
-    this.setState({ purchasedSeats: updatedPurchasedSeats }, () => {
-      localStorage.setItem('purchasedSeats', JSON.stringify(updatedPurchasedSeats));
-    });
+  renderCart() {
+    const { selectedSeats, sessionPrice, isPaid, hall, ticketsSent } = this.state;
+    const totalPrice = selectedSeats.length * sessionPrice;
+    const userEmail = localStorage.getItem("email"); // Отримуємо електронну пошту з localStorage
+  
+    return (
+      <div className='widget__cart'>
+        <div className='widget__cart-content'>
+          
+          {/* Загальна кількість квитків і загальна сума */}
+          <div className='widget__cart-summary'>
+            <strong><h3>Квитки</h3></strong>
+            <div className='widget__cart-summary__price'>
+              <p> {selectedSeats.length} квитка, </p>
+              <p>{totalPrice} грн</p>
+            </div>
+          </div>
+  
+          {selectedSeats.map((seatId) => {
+            const row = Math.floor((seatId - 1) / hall.columns) + 1; // Ряд
+            const seatNumber = ((seatId - 1) % hall.columns) + 1; // Номер місця в ряді
+            return (
+              <div key={seatId} className='widget__cart-ticket'>
+                <div className='widget__cart-ticket__info'>
+                  <p>{row} ряд</p>
+                  <p>{seatNumber} місце <strong> Super Lux</strong></p>
+                  <p>{sessionPrice} грн</p>
+                </div>
+                <button
+                  className="widget__cart-remove-button"
+                  onClick={() => this.removeSeat(seatId)} // Викликаємо функцію видалення
+                >
+                  × 
+              </button>
+              </div>
+              
+
+            );
+          })}
+        </div>
+  
+          <div className='widget__cart-total'>
+            <div className='widget__cart-total__price'>
+              <h3>Всього до сплати:</h3>
+              <h5>{totalPrice} грн</h5>
+            </div>
+
+            <button
+              className="widget__button"
+              onClick={this.handlePayment}
+              disabled={selectedSeats.length === 0 || isPaid}
+            >
+              {isPaid ? 'Продовжити' : 'Оплатити'}
+            </button>
+          </div>
+
+      </div>
+    );
   }
 
   render() {
-    const { movieData, selectedSeats, purchasedSeats } = this.state;
-    if (!movieData) return <div>Loading...</div>;
-
-    const { movie, session, hall, seats } = movieData;
-    const seatGrid = Array.from({ length: hall.rows }, () => Array(hall.columns).fill(null));
-
-    seats.forEach(seat => {
-      const isSelected = selectedSeats.includes(seat.id);
-      const isPurchased = purchasedSeats.includes(seat.id);
-      seatGrid[seat.row - 1][seat.column - 1] = (
-        <div
-          className={`Seat ${isSelected ? "selected" : ""} ${isPurchased ? "purchased" : "available"}`}
-          key={seat.id}
-          onClick={!isPurchased ? () => this.selectSeat(seat.id) : undefined}
-          style={{ cursor: isPurchased ? 'not-allowed' : 'pointer', backgroundColor: isPurchased ? '#ccc' : '' }}
-        >
-          {seat.row}-{seat.column}
-        </div>
-      );
-    });
-
-    
-
-    const purchasedSeatsDetails = purchasedSeats.map(seatId => {
-      const seat = seats.find(s => s.id === seatId);
-      return seat ? (
-        <div key={seat.id} className="purchased-seat-detail">
-          <p>{seat.row} ряд {seat.column} місце SUPER LUX {session.price} грн</p>
-          <button className="remove-ticket-btn" onClick={() => this.removeTicket(seatId)}>×</button>
-        </div>
-      ) : null;
-    });
-
+    const { movieName, posterPath, sessionStartTime, sessionEndTime, selectedSeats, reservedSeats, availableSeats, hall, sessionPrice } = this.state;
+  
+    const startSeatId = hall.id === 1 ? 1 : 151;
+    const seatGrid = Array.from({ length: hall.rows }, () => Array.from({ length: hall.columns }, () => null));
+  
+    for (let row = 0; row < hall.rows; row++) {
+      for (let col = 0; col < hall.columns; col++) {
+        const seatId = startSeatId + row * hall.columns + col;
+        const isSelected = selectedSeats.includes(seatId);
+        const isReserved = reservedSeats.includes(seatId);
+        const isAvailable = availableSeats.includes(seatId);
+  
+        if (isAvailable || isReserved) {
+          seatGrid[row][col] = (
+            <div
+              className={`Seat ${isSelected ? "selected" : ""} ${isReserved ? "reserved" : "available"}`}
+              key={seatId}
+              onClick={!isReserved ? () => this.selectSeat(seatId) : undefined}
+              style={{ cursor: isReserved ? 'not-allowed' : 'pointer', backgroundColor: isReserved ? '#ccc' : '' }}
+              title={isReserved ? "Це місце зайняте" : `Ряд: ${row + 1}, Місце: ${col + 1}, Ціна: ${sessionPrice} грн`} // Змінюємо текст для заброньованих місць
+            >
+              {/* Текст місця прибрано */}
+            </div>
+          );
+        }
+      }
+    }
+  
     return (
-        <section className="widget">
-          <div>
-            <div className="widget-container">
-              <img src={movie.posterPath} alt={movie.filmName} className="widget-poster" />
-              <div className="widget-container-text">
-                <h1 className="widget__name">{movie.filmName}</h1>
-                <div className="widget__format">
-                  <p className="format">2D</p>
-                  <p className="format">SDH</p>
-                </div>
-                <div className="widget-container__time">
-                  <CiAlarmOn style={{ color: "grey", fontSize: "20px" }} />
-                  <p className="widget__time">
-                    <strong>Час {this.formatTime(session.startTime)} <strong>-</strong> {this.formatTime(session.endTime)}</strong>
-                  </p>
-                </div>
-                <div className="widget__date">
-                  <BsCalendar2Date style={{ color: "grey", fontSize: "20px" }} />
-                  <p className="widget__current-date"><strong>{this.formatDate(session.startTime)}</strong></p>
-                </div>
-                <div className="widget-container__location">
-                  <CiLocationOn style={{ color: "grey", fontSize: "20px" }} />
-                  <p className="widget__location"><strong>Lux Cimena Theatre</strong></p>
-                </div>
+      <section className="widget">
+        <div>
+          <div className="widget-container">
+            <img src={posterPath} alt={movieName} className="widget-poster" />
+            <div className="widget-container-text">
+              <h1 className="widget__name">{movieName}</h1>
+              <div className="widget__format">
+                <p className="format">2D</p>
+                <p className="format">SDH</p>
+              </div>
+              <div className="widget-container__time">
+                <CiAlarmOn style={{ color: "grey", fontSize: "20px" }} />
+                <p className="widget__time">
+                  <strong>Час {this.formatTime(sessionStartTime)} <strong>-</strong> {this.formatTime(sessionEndTime)}</strong>
+                </p>
+              </div>
+              <div className="widget__date">
+                <BsCalendar2Date style={{ color: "grey", fontSize: "20px" }} />
+                <p className="widget__current-date"><strong>{this.formatDate(sessionStartTime)}</strong></p>
+              </div>
+              <div className="widget-container__location">
+                <CiLocationOn style={{ color: "grey", fontSize: "20px" }} />
+                <p className="widget__location"><strong>Lux Cinema Theatre</strong></p>
               </div>
             </div>
-
-              <div className="widget__seatplan">
-              <div className="widget__seat-reserved">
-                  <div className="widget-container__price">
-                  <p className="widget__red-block"></p>
-                  <p className="widget__price">Super Lux - {session.price} грн</p>
-                  </div>
-                  <div className="widget-reserved">
-                  <p className="widget__grey-block"></p>
-                  <p className="widget__text">Заброньовано</p>
-                  </div>
+          </div>
+  
+          <div className="widget__seatplan">
+            <div className="widget__seat-reserved">
+              <div className="widget-container__price">
+                <p className="widget__red-block"></p>
+                <p className="widget__price">Super Lux - {this.state.sessionPrice} грн</p>
               </div>
-                  <img src={Line} alt="Seat Plan Divider" className="widget__seatplan-line" />
-                  <p className="widget__screen">Екран</p>
-
-                  <div>
-                      {seatGrid.map((row, rowIndex) => (
-                      <div className="Row" key={rowIndex}>{row}</div>
-                      ))}
-                  </div>
-
+              <div className="widget-reserved">
+                <p className="widget__grey-block"></p>
+                <p className="widget__text">Заброньовано</p>
               </div>
             </div>
-            <div className='widget__cart'>
-              <div className='widget__cart-btn' style={{ textAlign: 'center', backgroundColor: 'white' }}>
-                <button
-                  className="widget__button"
-                  onClick={() => this.handlePayment()}
-                  disabled={selectedSeats.length === 0}
-                >
-                {selectedSeats.length === 0 ? 'Select seats' : 'Pay'}
-                </button>
-                  <button
-                    className="widget__button"
-                    onClick={this.clearAllSeats}
-                    style={{ marginTop: '10px', marginLeft: '10px' }}
-                  >
-                  Clear All Seats
-                </button>
-              </div>
-              <div className="widget__cart-info">
-                <p>Куплено білетів: {purchasedSeats.length}</p>
-                {purchasedSeatsDetails}
-              </div>
+            <img src={Line} alt="Seat Plan Divider" className="widget__seatplan-line" />
+            <p className="widget__screen">Екран</p>
+  
+            <div>
+              {seatGrid.map((row, rowIndex) => (
+                <div className="Row" key={rowIndex}>
+                  {row.map((seat, colIndex) => {
+                    const seatId = rowIndex * hall.columns + colIndex + 1;
+                    return (
+                      <div key={seatId}>
+                        {seat && React.cloneElement(seat)}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
-        </section>
+          </div>
+        </div>
+  
+        {this.renderCart()}
+      </section>
     );
   }
 }

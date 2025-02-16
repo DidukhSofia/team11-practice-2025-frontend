@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { format, parseISO} from "date-fns";
+import { format, parseISO, addHours } from "date-fns";
 import "./Card.css";
 import { FaStar } from "react-icons/fa";
 
@@ -9,52 +9,47 @@ const Card = ({ card, selectedDate }) => {
   const [genres, setGenres] = useState([]);
   const [sessions, setSessions] = useState([]);
 
-  // Fetch actors, genres, and sessions from the API inside useEffect
   useEffect(() => {
-    fetch("/Get_All.json") // Use the correct path for your API
-      .then(response => response.json())
-      .then(data => {
-        setActors(data.actors);
-        setGenres(data.genres);
-        setSessions(data.sessions); // Assuming sessions are included in the response
-      })
-      .catch(error => console.error("Error fetching actors, genres, and sessions:", error));
+    const fetchData = async () => {
+      try {
+        const actorsResponse = await fetch("https://localhost:7230/api/Actors");
+        const genresResponse = await fetch("https://localhost:7230/api/Genres");
+        const sessionsResponse = await fetch("https://localhost:7230/api/Sessions");
+
+        const actorsData = await actorsResponse.json();
+        const genresData = await genresResponse.json();
+        const sessionsData = await sessionsResponse.json();
+
+        setActors(actorsData);
+        setGenres(genresData);
+        setSessions(sessionsData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  // Get the actor names based on the IDs from card.actors
   const actorNames = card.actors
-    .map(id => {
-      const actor = actors.find(actor => actor.id === id);
-      return actor ? actor.name : null;
-    })
-    .filter(name => name !== null) // Filter out null values (actors not found)
+    .map((id) => actors.find((actor) => actor.id === id)?.name)
+    .filter(Boolean)
     .join(", ");
 
-  // Get the genre names based on the IDs from card.genres
   const genresNames = card.genres
-    .map(id => {
-      const genre = genres.find(genre => genre.id === id);
-      return genre ? genre.name : null;
-    })
-    .filter(name => name !== null) // Filter out null values (genres not found)
+    .map((id) => genres.find((genre) => genre.id === id)?.name)
+    .filter(Boolean)
     .join(", ");
 
-  // Get the session start times for the selected movie and date
   const filteredSessions = sessions
-    .filter(session => session.movieId === card.id) // Only sessions for the selected movie
-    .filter(session => session.startTime.startsWith(selectedDate)) // Only sessions on the selected date
-    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime)); // Sort sessions by start time
-
+    .filter((session) => session.movieId === card.id && session.startTime.startsWith(selectedDate))
+    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime));
 
   return (
     <div className="movie-card">
       <Link to={`/movies/${card.id}`} className="movie__content-box-link">
         <div className="movie__content-box">
-          <img
-            src={card.posterPath}
-            alt={card.filmName}
-            className="movie-poster"
-          />
+          <img src={card.posterPath} alt={card.filmName} className="movie-poster" />
           <div className="movie__content-text">
             <div className="movie-details">
               <h2 className="movie-title">{card.filmName}</h2>
@@ -65,37 +60,36 @@ const Card = ({ card, selectedDate }) => {
                     <FaStar key={index} style={{ color: "red", fontSize: "18px" }} />
                   ))}
               </div>
-
-              <p className="movie-genres">
-                Genres: {genresNames || "N/A"}
-              </p>
-
-              <p className="movie-actors">
-                Actors: {actorNames || "N/A"}
-              </p>
-
+              <p className="movie-genres">Жанри: {genresNames || "N/A"}</p>
+              <p className="movie-actors">Актори: {actorNames || "N/A"}</p>
               <Link to={`/movies/${card.id}`} className="movie-info-button">
-                More info
+                Детальніше
               </Link>
             </div>
-
             <div className="movie-sessions">
               {filteredSessions.length > 0 ? (
                 <div className="session-times">
-                  {filteredSessions.map(session => (
-                    <div key={session.id} className="session">
-                      <Link
-                        to={`/session/${session.id}/hall/${session.hallId}`} // Dynamic path
-                        className="session__time-link"
-                        onClick={(event) => event.stopPropagation()}
-                      >
-                        {format(parseISO(session.startTime), "HH:mm")}
-                      </Link>
-                    </div>
-                  ))}
+                  {filteredSessions.map((session) => {
+                    const sessionStartTime = parseISO(session.startTime);
+                    // Віднімаємо 2 години, щоб отримати час у UTC
+                    const adjustedStartTime = addHours(sessionStartTime, -2);
+
+                    return (
+                      <div key={session.id} className="session">
+                        <Link
+                          to={`/session/${session.id}/hall/${session.hallId}`}
+                          className="session__time-link"
+                          onClick={(event) => event.stopPropagation()}
+                        >
+                          {/* Форматуємо відкоригований час */}
+                          {format(adjustedStartTime, "HH:mm")}
+                        </Link>
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
-                <p>No sessions available for this movie.</p>
+                <p>Немає доступних сеансів.</p>
               )}
             </div>
           </div>

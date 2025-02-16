@@ -4,6 +4,10 @@
     gap: 40px;
     padding: 20px 50px;
   }
+
+  .mainCard-rating{
+    white-space: nowrap;
+  }
   
   .movie-mainCard {
 

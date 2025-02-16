@@ -12,7 +12,6 @@ const App = () => {
   return (
     <Router>
         <Aside />
-
           <Routes>
           <Route path="/movies" element={<MoviesPage />} />
             <Route path="/" element={<Main />} />

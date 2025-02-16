@@ -6,12 +6,19 @@ const MoviesPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    fetch("/Get_All.json") // Завантажуємо дані з публічної папки
-      .then((response) => response.json())
-      .then((data) => setMovies(data.movies))
-      .catch((error) => console.error("Помилка завантаження фільмів:", error));
+useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    fetch("https://localhost:7230/api/Movie", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then(response => response.json())
+      .then(data => setMovies(data)) // Очікується, що бекенд поверне масив фільмів
+      .catch(error => console.error("Error fetching movies:", error));
   }, []);
+
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);

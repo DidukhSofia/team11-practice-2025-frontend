@@ -10,14 +10,18 @@ import { FaStar } from "react-icons/fa";
 
 const MovieList = ({ movies = [] }) => {
   const [genres, setGenres] = useState([]);
-
   useEffect(() => {
-    fetch("/Get_All.json") // Use the correct path for your API
+    const token = localStorage.getItem("authToken");
+
+    fetch("https://localhost:7230/api/Genres", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
       .then(response => response.json())
-      .then(data => {
-        setGenres(data.genres);
-      })
-      .catch(error => console.error("Error fetching actors and genres:", error));
+      .then(data => setGenres(data)) // Очікується, що бекенд поверне масив жанрів
+      .catch(error => console.error("Error fetching genres:", error));
   }, []);
 
   if (!movies || movies.length === 0) {

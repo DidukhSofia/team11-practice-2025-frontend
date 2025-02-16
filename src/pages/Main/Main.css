@@ -6,7 +6,7 @@
 .Background-image{
     position: relative;
     width: 100%;
-    
+    opacity: 0.75;
 }
 
 .main-button{
@@ -15,12 +15,17 @@
     color: red;
     font-size: 18px;
     position: absolute;
-    bottom: 60px;
+    bottom: 40px;
     right: 40px;
     border-radius: 16px;
     text-align: center;
     font-weight: bold;
     align-items: center;
+    border: 1px solid red;
+}
+
+.main-button:hover{
+    color: white;
 }
 
 
